@@ -1,0 +1,12 @@
+[tool.black]
+target-version = ["py311"]
+[tool.ruff]
+# Enable Pyflakes `E` and `F` codes by default.
+select = ["E", "F"]
+ignore = ["E501","F403"]
+extend-exclude = ["apps.py", "migrations"]
+force-exclude = true
+[tool.bandit]
+[tool.isort]
+[tool.pydocstyle]
+ignore =["D212","D104","D203"]
