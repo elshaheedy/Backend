@@ -45,4 +45,7 @@ jobs:
       #     python manage.py collectstatic --no-input
 
       - name: Run tests
-        run: python project/manage.py test project --no-input
+        run: |
+           cd project
+           python manage.py test --no-input
+        # run: python project/manage.py test project --no-input

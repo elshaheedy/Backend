@@ -134,3 +134,14 @@ SIMPLE_JWT = {
 
 
 }
+### CORS HEADERS ###
+
+INSTALLED_APPS += [
+    'corsheaders',
+]
+MIDDLEWARE += [
+    'corsheaders.middleware.CorsMiddleware',
+]
+CORS_ALLOW_HEADERS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ["https://zhospital.azurewebsites.net","https://hospital-4o9a.onrender.com"]
