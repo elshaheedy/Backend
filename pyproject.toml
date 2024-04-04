@@ -9,4 +9,4 @@ force-exclude = true
 [tool.bandit]
 [tool.isort]
 [tool.pydocstyle]
-ignore =["D212","D104","D203"]
+ignore =["D212","D104","D203"   ]
