@@ -16,26 +16,11 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = '__all__'
 class PatientSerializer(serializers.ModelSerializer):
-    # profile = ProfileSerializer()
     class Meta:
         model = Patient
         fields = '__all__'
 
-    # def create(self, validated_data):
-    #     profile_data = validated_data.pop('profile')
-    #     profile = Profile.objects.create(**profile_data)
-    #     patient = Patient.objects.create(profile=profile, **validated_data)
-    #     return patient
-    # def update(self, instance, validated_data):
-    #     profile_data = validated_data.pop('profile', None)
-    #     if profile_data:
-    #         profile_serializer = self.fields['profile']
-    #         profile_instance = instance.profile
-    #         profile_serializer.update(profile_instance, profile_data)
-    #     for attr, value in validated_data.items():
-    #         setattr(instance, attr, value)
-    #     instance.save()
-    #     return instance
+      
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
