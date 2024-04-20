@@ -1,30 +1,36 @@
-# test patient views
+from accounts.tests.test_setup import HomeTestSetup
 from accounts.models import *
-from django.test import TestCase
-from rest_framework.test import APIClient
 
 
-class PatientTest(TestCase):
+class HomeTest(HomeTestSetup):
     def setUp(self) -> None:
-        self.client = APIClient()
+        super().setUp()
+        self.url = '/accounts/patient/'
+        self.staff, self.staff_token = self.create_staff()
+        self.patient, self.patient_token = self.create_patient(
+            self.staff_token)
 
     def test_create_patient(self):
-        url='/accounts/patient/'
-        # url=reverse('patient-create')
-        data={
-
-
-            'first_name':'test',
-            'last_name':'test',
-            'date_of_birth':'2000-01-01',
-            'gender':'M',
-            'disease_type':'test',
-            'blood_type':'test'
-
+        data = {
+            'marital_status': 'test',
+            'nationality': 'test',
+            'full_name': 'test',
+            'national_id': '0123456789012342',
+            'date_of_birth': '2000-01-01',
+            'gender': 'M',
+            'disease_type': 'test',
+            'blood_type': 'test',
         }
-        response=self.client.post(url,data,format='json')
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(Patient.objects.count(), 1)
-        self.assertEqual(Patient.objects.get().first_name, 'test')
 
-
+        # self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        response = self.client.post(
+            self.url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
+        self.assertEqual(response.status_code, 403)
+    def test_list_patients(self):
+        response = self.client.get(
+            self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
+        self.assertEqual(response.status_code, 403)
+    def test_get_patient(self):
+        response = self.client.get(
+            self.url+f'{self.patient["id"]}/', format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
+        self.assertEqual(response.status_code, 200)

@@ -22,6 +22,7 @@ from .utls import schema_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('visit/', include('visit.urls'))
 
 ]
 urlpatterns += [
