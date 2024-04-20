@@ -34,16 +34,10 @@ jobs:
 
       - name: Set up environment variables
         env:
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
         run: |
-          echo "DATABASE_NAME=$DATABASE_NAME" >> $GITHUB_ENV
-          echo "DATABASE_USER=$DATABASE_USER" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> $GITHUB_ENV
-          echo "DATABASE_HOST=$DATABASE_HOST" >> $GITHUB_ENV
+          echo "DATABASE_URL=$DATABASE_URL" >> $GITHUB_ENV
 
       # - name: Prepare database
       #   run: |
@@ -51,4 +45,7 @@ jobs:
       #     python manage.py collectstatic --no-input
 
       - name: Run tests
-        run: python manage.py test --no-input
+        run: |
+           cd project
+           python manage.py test --no-input
+        # run: python project/manage.py test project --no-input

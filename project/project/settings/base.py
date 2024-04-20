@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-sv!uy2wcwaq$@zli4pf=qaowyt-&*!$+a=phvk1^dv_gna_ill
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS : list = []
+ALLOWED_HOSTS : list = ['*']
 
 
 # Application definition
@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    ### added ###
+    'accounts',
+    'visit',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -70,15 +76,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -121,3 +118,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+### simple jwt ###
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
+
+
+}
+### CORS HEADERS ###
+
+INSTALLED_APPS += [
+    'corsheaders',
+]
+MIDDLEWARE += [
+    'corsheaders.middleware.CorsMiddleware',
+]
+CORS_ALLOW_HEADERS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ["https://zhospital.azurewebsites.net","https://hospital-4o9a.onrender.com"]
