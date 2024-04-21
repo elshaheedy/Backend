@@ -27,7 +27,9 @@ class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
         fields = '__all__'
+        exclude = ['is_deleted']
 class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
         fields = '__all__'
+        exclude = ['is_deleted']
