@@ -10,26 +10,30 @@ from .models import *
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['is_deleted']
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['is_deleted']
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = '__all__'
-
+        # fields = '__all__'
+        exclude = ['is_deleted']
       
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['is_deleted']
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['is_deleted']
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
