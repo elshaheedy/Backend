@@ -20,7 +20,13 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from accounts.permissions import  OwnPermission,  StaffPermission 
 
-
+class UserImageViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for handling UserImage model.
+    """
+    queryset = UserImage.objects.all()
+    serializer_class = UserImageSerializer
+    permission_classes = [OwnPermission]
 class PhoneViewSet(viewsets.ModelViewSet):
     """
     ViewSet for handling Phone model.

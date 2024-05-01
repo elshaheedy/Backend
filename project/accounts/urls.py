@@ -13,7 +13,7 @@ router.register('employee', EmployeeViewSet)
 router.register('doctor', DoctorViewSet)
 router.register('phone', PhoneViewSet)
 router.register('address', AddressViewSet)
-
+router.register('user-image', UserImageViewSet)
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [

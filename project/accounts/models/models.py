@@ -19,7 +19,6 @@ class Profile(models.Model):
     nationality = models.CharField(max_length=255 ,default="Egypt")
     national_id= models.CharField(max_length=255)
     date_of_birth = models.DateField(blank=True, null=True)
-    image = models.ImageField(upload_to='profile_images', blank=True)
     notes= models.TextField(blank=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,7 +26,12 @@ class Profile(models.Model):
     class Meta:
         abstract = True
 
- 
+class UserImage(models.Model):
+    image = models.ImageField(upload_to='user_images')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
 class Phone(models.Model):
     mobile = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

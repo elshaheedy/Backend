@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import *
+from ..models import *
 
 
 # class ProfileSerializer(serializers.ModelSerializer):
@@ -10,6 +10,11 @@ from .models import *
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
+        # fields = '__all__'
+        exclude = ['is_deleted']
+class UserImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserImage
         # fields = '__all__'
         exclude = ['is_deleted']
 class AddressSerializer(serializers.ModelSerializer):
