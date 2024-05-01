@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 # from accounts.tests.test_setup import HomeTestSetup
 
 
-class HomeTestSetup(TestCase):
+class PostionTestSetup(TestCase):
     def setUp(self) -> None:
         self.client = APIClient()
     def get_postion_token(self,postion):
@@ -20,8 +20,8 @@ class HomeTestSetup(TestCase):
 
     def get_token(self,username,password):
         token= self.client.post('/accounts/token/', {'username': username, 'password': password}, format='json')
-        if 'access' not in token.data:
-            print('no access',token.data,username,password)
+        # if 'access' not in token.data:
+            # print('no access',token.data,username,password)
         return token.data['access']
     def create_staff(self):
         user=User.objects.create_user(username='stafftest', password='test123')
@@ -57,6 +57,6 @@ class HomeTestSetup(TestCase):
 
         }
 
-        response=self.client.post('/accounts/home-create/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + staff_token)
-        token=self.get_token('01234567890123','01234567890123')
+        response=self.client.post('/accounts/postion-create/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + staff_token)
+        token=self.get_token(data['patient']['national_id'], data['patient']['national_id'])
         return response.data['patient'],token

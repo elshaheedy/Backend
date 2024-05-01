@@ -42,3 +42,14 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+class PositionSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Patient
+        fields = '__all__'
+    phone = PhoneSerializer(many=True)
+    address = AddressSerializer(many=True)
+    
+class GeneralSerializer(serializers.Serializer):
+        postion=PositionSerializer(many=True)
+    

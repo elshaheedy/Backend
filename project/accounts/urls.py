@@ -21,8 +21,8 @@ urlpatterns = [
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('home-create/', HomeCreate.as_view({'post': 'post'}), name='home-create'),
-    path('home-update/', HomeUpdate.as_view({'post': 'post'}), name='home-update'),
+    path('postion-create/', PostionCreate.as_view({'post': 'post'}), name='home-create'),
+    path('postion-update/', PostionUpdate.as_view({'post': 'post'}), name='home-update'),
 
   
 ]

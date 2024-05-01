@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.services import create_data, update_data
+from accounts.services import *
 from accounts.swagger_decorators import home_create_schema, home_update_schema
 from .models import *
 from .serializers import *
@@ -66,22 +66,22 @@ class EmployeeViewSet(viewsets.ModelViewSet):
    
 
 
-class HomeCreate(GenericViewSet):
+class PostionCreate(GenericViewSet):
     permission_classes = [StaffPermission]
-
-    @home_create_schema()
+    serializer_class = GeneralSerializer
+    # @home_create_schema()
     def post(self, request, *args, **kwargs):
 
-        data= create_data(request.data)
+        data= postion_create(request.data)
         return Response(data, status=status.HTTP_201_CREATED)
  
-class HomeUpdate(GenericViewSet):
+class PostionUpdate(GenericViewSet):
     permission_classes = [StaffPermission]
-
-    @home_update_schema()
+    serializer_class = GeneralSerializer
+    # @home_update_schema()
     def post(self, request, *args, **kwargs):
 
-        data= update_data(request.data)
+        data= postion_update(request.data)
         return Response(data, status=status.HTTP_200_OK)
     
 

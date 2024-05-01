@@ -1,8 +1,8 @@
-from accounts.tests.test_setup import HomeTestSetup
+from accounts.tests.test_setup import *
 from accounts.models import *
 
 
-class HomeTest(HomeTestSetup):
+class PostionTest(PostionTestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.url = '/accounts/patient/'

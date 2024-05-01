@@ -1,7 +1,7 @@
-from accounts.tests.test_setup import HomeTestSetup
+from accounts.tests.test_setup import *
 from accounts.models import *
 
-class HomeTest( HomeTestSetup):
+class PostionTest( PostionTestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.staff,self.staff_token=self.create_staff()
@@ -18,22 +18,23 @@ class HomeTest( HomeTestSetup):
                 'gender':'M',
                 'disease_type':'test',
                 'blood_type':'test',
+                'address':{
+                    'street':'test',
+                    'city':'test',
+                    'governorate':'test'
+                },
+                'phone':{
+                    'mobile':'test'
+                }
             },
-            'address':{
-                'street':'test',
-                'city':'test',
-                'governorate':'test'
-            },
-            'phone':{
-                'mobile':'test'
-            }
 
 
         }
 
       
         # self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-        response=self.client.post('/accounts/home-create/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        response=self.client.post('/accounts/postion-create/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        # print("response",response.data)
         self.assertEqual(response.status_code, 201)
       
         self.assertEqual(Patient.objects.get(national_id='012345678901234').full_name, 'test')
@@ -55,7 +56,6 @@ class HomeTest( HomeTestSetup):
                 'gender':'M',
                 'disease_type':'test',
                 'blood_type':'test',
-            },
             'address':{
                 'id':Address.objects.get(user=self.patient['user']).id,
                 'street':'test',
@@ -66,12 +66,13 @@ class HomeTest( HomeTestSetup):
                 'id':Phone.objects.get(user=self.patient['user']).id,
                 'mobile':'test'
             }
+            },
 
 
         }
        
 
-        response=self.client.post('/accounts/home-update/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        response=self.client.post('/accounts/postion-update/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Patient.objects.count(), 1)
         self.assertEqual(Patient.objects.get().full_name, 'test2')
@@ -80,7 +81,7 @@ class HomeTest( HomeTestSetup):
 
 
 
-class HomePermissionTest( HomeTestSetup):
+class PostionPermissionTest( PostionTestSetup):
     def setUp(self) -> None:
         super().setUp()
        
@@ -98,7 +99,6 @@ class HomePermissionTest( HomeTestSetup):
                 'gender':'M',
                 'disease_type':'test',
                 'blood_type':'test',
-            },
             'address':{
                 'street':'test',
                 'city':'test',
@@ -107,10 +107,11 @@ class HomePermissionTest( HomeTestSetup):
             'phone':{
                 'mobile':'test'
             }
+            },
 
 
         }
-        url='/accounts/home-create/'
+        url='/accounts/postion-create/'
         response=self.client.post(url,data,format='json')
         # print(response.data)
         self.assertEqual(response.status_code, 401)
@@ -127,7 +128,7 @@ class HomePermissionTest( HomeTestSetup):
 
     def test_update_patient(self):
    
-        url=f'/accounts/home-update/'
+        url=f'/accounts/postion-update/'
         data={
 
          
@@ -141,7 +142,6 @@ class HomePermissionTest( HomeTestSetup):
                 'gender':'M',
                 'disease_type':'test',
                 'blood_type':'test',
-            },
             'address':{
                 'id':Address.objects.get(user=self.patient['user']).id,
                 'street':'test',
@@ -153,10 +153,11 @@ class HomePermissionTest( HomeTestSetup):
                 'mobile':'test'
             }
 
+            },
 
         }
        
-        url=f'/accounts/home-update/'
+        url=f'/accounts/postion-update/'
         response=self.client.post(url,data,format='json')
         self.assertEqual(response.status_code, 401)
 
