@@ -23,12 +23,28 @@ class AddressSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['is_deleted']
 class PatientSerializer(serializers.ModelSerializer):
+    phone = serializers.SerializerMethodField()
+    address = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+
+    
+    
     class Meta:
         model = Patient
         # fields = '__all__'
         exclude = ['is_deleted']
-      
-
+    
+    def get_phone(self, obj):
+        phones =Phone.objects.filter(user=obj.user)
+        return PhoneSerializer(phones, many=True).data
+        # return PhoneSerializer(obj.user.phone, many=True).data
+    def get_address(self, obj):
+        addresses =Address.objects.filter(user=obj.user)
+        return AddressSerializer(addresses, many=True).data
+    def get_image(self, obj):
+        images =UserImage.objects.filter(user=obj.user)
+        return UserImageSerializer(images, many=True).data
+     
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee

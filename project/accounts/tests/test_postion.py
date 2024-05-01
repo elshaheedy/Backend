@@ -227,3 +227,5 @@ class PostionWithImageTest(PostionTestSetup):
             url, obj, HTTP_AUTHORIZATION='Bearer ' + self.staff_token )
 
         self.assertEqual(response.status_code, 201)
+        # remvove image
+        os.remove("test_image.jpg")

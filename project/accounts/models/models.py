@@ -27,14 +27,14 @@ class Profile(models.Model):
         abstract = True
 
 class UserImage(models.Model):
-    image = models.ImageField(upload_to='user_images')
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='user_images' )
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_image' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 class Phone(models.Model):
     mobile = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='phone' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -43,7 +43,7 @@ class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     governorate = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='address' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)

@@ -2,7 +2,7 @@ from accounts.tests.test_setup import *
 from accounts.models import *
 
 
-class PostionTest(PostionTestSetup):
+class PatientTest(PostionTestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.url = '/accounts/patient/'
@@ -33,4 +33,8 @@ class PostionTest(PostionTestSetup):
     def test_get_patient(self):
         response = self.client.get(
             self.url+f'{self.patient["id"]}/', format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
+       
         self.assertEqual(response.status_code, 200)
+
+        self.assertIn('address', response.data)
+        self.assertIn('phone', response.data)
