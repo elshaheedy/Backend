@@ -50,8 +50,9 @@ class VisitViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=201, headers=headers)
     
-class DashboardViewSet(GenericViewSet):
+class Statistics(GenericViewSet):
     # permission_classes=[IsAuthenticated]
+    serializer_class=StatisticsSerializer
     def get (self, request, *args, **kwargs):
         data={
             'total_visits':Visit.objects.count(),

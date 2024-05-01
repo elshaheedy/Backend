@@ -152,3 +152,20 @@ CSRF_TRUSTED_ORIGINS = ["https://zhospital.azurewebsites.net","https://hospital-
 ### media and media root ###
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=20),  # Short expiration for security
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),  # Adjust based on requirements
+}
