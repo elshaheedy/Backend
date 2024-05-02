@@ -31,7 +31,7 @@ class DoctorFilter(filters.FilterSet):
             'national_id': ['exact'],
             'full_name': ['exact'],
             'created_at': ['year', 'month', 'day'],
-            'experience': ['exact'],
+            'experience_years': ['exact'],
             'work_days': ['exact'],
             'license_number': ['exact'],
         }

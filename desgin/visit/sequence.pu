@@ -1,0 +1,15 @@
+@startuml visit
+
+participant Admin
+participant System
+participant Visit
+
+Admin -> System : "set visit"
+
+
+
+Admin -> System : "get visit"
+System -> Admin : "split visit to missed and current and upcoming"
+
+Admin -> System : "update visit to finished"
+@enduml
