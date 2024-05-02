@@ -34,3 +34,9 @@ class AttachmentSerializer(serializers.ModelSerializer):
         model = Attachment
         # fields = '__all__'
         exclude = ['is_deleted']
+
+class StatisticsSerializer(serializers.Serializer):
+    total_visits=serializers.IntegerField()
+    total_patients=serializers.IntegerField()
+    total_doctors=serializers.IntegerField()
+    total_employees=serializers.IntegerField()

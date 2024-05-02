@@ -22,9 +22,17 @@ model_map = {
 }
 
 def create_user(request_data):
-    national_id = request_data['patient']['national_id']
-    user = User.objects.create_user(username=national_id, password=national_id)
-    return user
+    try:
+        national_id = request_data['patient']['national_id']
+    except:
+        return "national_id is required", None
+    try:
+        user = User.objects.create_user(username=national_id, password=national_id)
+        return "created" ,user 
+    except :
+        return "national_id already exists", None
+
+
 
 def create_model(data, user,SerializerClass):
     data['user'] = user.id
@@ -34,16 +42,22 @@ def create_model(data, user,SerializerClass):
     model_instance = serializer.save()
     return SerializerClass(model_instance).data
 
-def create_data(data):
-    user = create_user(data)
+def postion_create(data):
+    massage, user = create_user(data)
+    if massage!="created":   return Response(massage, status=status.HTTP_400_BAD_REQUEST)
+    
     response_data={}
     for field in data:
         serializer_class = serializer_map.get(field)
-        if not serializer_class:   continue
+        if field not in model_map:   continue
         response_data[field]= create_model(data[field],user,serializer_class)
+
+        for sub_field in data[field]:
+            if  sub_field not in serializer_map:   continue
+            serializer_class = serializer_map.get(sub_field)
+            response_data[field][sub_field]= create_model(data[field][sub_field],user,serializer_class)
     return response_data
         
-
 
 
 
@@ -57,15 +71,21 @@ def update_model(model_instance, model_data,SerializerClass):
     return SerializerClass(updated_model).data
 
 
-def update_data(data):
+def postion_update(data):
 
     response_data={}
     for field in data:
+        if   field not in model_map  or field not in serializer_map:   continue
         model_class = model_map.get(field)
         serializer_class = serializer_map.get(field)
-        if not  model_class or not serializer_class:   continue
         instance = model_class.objects.get(id=data[field].pop('id'))
         response_data[field]= update_model(instance, data[field],serializer_class)
-        
+        for sub_field in data[field]:
+            if  sub_field not in serializer_map or sub_field not in model_map:   continue
+            model_class = model_map.get(sub_field)
+            serializer_class = serializer_map.get(sub_field)
+            instance = model_class.objects.get(id=data[field][sub_field].pop('id'))
+            response_data[field][sub_field]= update_model(instance, data[field][sub_field],serializer_class)
+            
     return response_data
 

@@ -14,6 +14,6 @@ router.register('attachment', AttachmentViewSet)
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
     path('', include(router.urls)),
-    path('dashboard/', DashboardViewSet.as_view({'get': 'get'}), name='dashboard'),
+    path('statistics/', Statistics.as_view({'get': 'get'}), name='dashboard'),
     
 ]
