@@ -15,7 +15,7 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True, null=True)
     gender = models.CharField(max_length=255)
-    marital_status = models.CharField(max_length=255)
+    marital_status = models.CharField(max_length=255 ,null=True,blank=True)
     nationality = models.CharField(max_length=255 ,default="Egypt")
     national_id= models.CharField(max_length=255)
     date_of_birth = models.DateField(blank=True, null=True)

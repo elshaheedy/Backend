@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create and save sample data for Category
 
-        users_count = max(10-len(User.objects.all()), 0)
+        users_count = max(12-len(Patient.objects.all()), 0)
         users = UserFactory.create_batch(
             users_count,
         )
@@ -84,3 +84,4 @@ class Command(BaseCommand):
             self.style.SUCCESS(
                 f"Successfully created and saved {len(phones)} phones")
         )
+

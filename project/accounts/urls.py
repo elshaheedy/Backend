@@ -14,6 +14,8 @@ router.register('doctor', DoctorViewSet)
 router.register('phone', PhoneViewSet)
 router.register('address', AddressViewSet)
 router.register('user-image', UserImageViewSet)
+router.register('group', GroupViewSet)
+router.register('permission', PermissionViewSet)
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
@@ -23,6 +25,7 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('postion-create/', PostionCreate.as_view({'post': 'post'}), name='home-create'),
     path('postion-update/', PostionUpdate.as_view({'post': 'post'}), name='home-update'),
-
+    path('assign-user-to-groups/', AssignUserToGroups.as_view({'post': 'post'}), name='assign-user-to-groups'),
+    path('assign-permissions-to-user/', AssignPermissionsToUser.as_view({'post': 'post'}), name='assign-permissions-to-user'),
   
 ]

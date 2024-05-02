@@ -14,6 +14,5 @@ class AddressTest(PostionTestSetup):
         response = self.client.get(
             self.url+f'{self.patient["id"]}/', format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
-        print(response.data)
 
 

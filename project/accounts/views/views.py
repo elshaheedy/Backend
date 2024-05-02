@@ -4,6 +4,7 @@ Views module for the accounts app.
 This module contains the views for handling user authentication and account management.
 """
 
+from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -11,9 +12,9 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from accounts.services import *
-from accounts.swagger_decorators import home_create_schema, home_update_schema
-from .models import *
-from .serializers import *
+# from accounts.swagger_decorators import home_create_schema, home_update_schema
+from accounts.models import *
+from accounts.serializers import *
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -76,15 +77,16 @@ class PostionCreate(GenericViewSet):
     permission_classes = [StaffPermission]
     serializer_class = GeneralSerializer
     # @home_create_schema()
+    @swagger_auto_schema(operation_id="home_create")
     def post(self, request, *args, **kwargs):
 
         data= postion_create(request.data)
         return Response(data, status=status.HTTP_201_CREATED)
- 
 class PostionUpdate(GenericViewSet):
     permission_classes = [StaffPermission]
     serializer_class = GeneralSerializer
     # @home_update_schema()
+    @swagger_auto_schema(operation_id="home_update")
     def post(self, request, *args, **kwargs):
 
         data= postion_update(request.data)
