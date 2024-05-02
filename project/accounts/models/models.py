@@ -15,11 +15,10 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True, null=True)
     gender = models.CharField(max_length=255)
-    marital_status = models.CharField(max_length=255)
+    marital_status = models.CharField(max_length=255 ,null=True,blank=True)
     nationality = models.CharField(max_length=255 ,default="Egypt")
     national_id= models.CharField(max_length=255)
     date_of_birth = models.DateField(blank=True, null=True)
-    image = models.ImageField(upload_to='profile_images', blank=True)
     notes= models.TextField(blank=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,10 +26,15 @@ class Profile(models.Model):
     class Meta:
         abstract = True
 
- 
+class UserImage(models.Model):
+    image = models.ImageField(upload_to='user_images' )
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_image' )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
 class Phone(models.Model):
     mobile = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='phone' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -39,7 +43,7 @@ class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     governorate = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='address' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)

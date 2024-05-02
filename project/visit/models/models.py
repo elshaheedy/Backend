@@ -5,11 +5,11 @@ class Visit(models.Model):
     id = models.AutoField(primary_key=True)
     visit_number = models.IntegerField(null=True)
     ticket = models.CharField(max_length=255)
-    doctors = models.ManyToManyField('accounts.Doctor',null=True)
+    doctors = models.ManyToManyField('accounts.Doctor',null=True ,blank=True , related_name='visits')
     # date = models.DateField()
     # time = models.TimeField()
     datatime = models.DateTimeField(auto_now_add=True)
-    enddatetime = models.DateTimeField(null=True)
+    # enddatetime = models.DateTimeField(null=True)
 
     patient = models.ForeignKey('accounts.Patient', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
