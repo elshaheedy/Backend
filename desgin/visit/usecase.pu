@@ -1,0 +1,15 @@
+@startuml OnlineShoppingSystem
+
+left to right direction
+actor Admin as "Admin"
+actor System as "System"
+actor Patient as "Patient"
+
+rectangle "Use Cases" {
+    Admin --> (Manage patients)
+    Admin --> (Manage visits)
+    System --> (Split  visits to missed and current and upcoming)
+    Patient --> (Get his data)
+}
+
+@enduml
