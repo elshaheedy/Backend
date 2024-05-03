@@ -8,16 +8,15 @@ from unittest.mock import patch
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
-class PostionTest(PostionTestSetup):
+class PatientTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.staff, self.staff_token = self.create_staff()
         self.patient, self.patient_token = self.create_patient(
             self.staff_token)
-
     def test_create_patient(self):
         data = {
-            'patient': {
+  
                 'marital_status': 'test',
                 'nationality': 'test',
                 'full_name': 'test',
@@ -34,29 +33,28 @@ class PostionTest(PostionTestSetup):
                 'phone': {
                     'mobile': 'test'
                 }
-            },
+            
 
 
         }
 
         # self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-        response = self.client.post('/accounts/postion-create/', data,
+        response = self.client.post('/accounts/patient/', data,
                                     format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-        # print("response",response.data)
         self.assertEqual(response.status_code, 201)
 
         self.assertEqual(Patient.objects.get(
             national_id='012345678901234').full_name, 'test')
-        self.assertEqual(response.data['patient']['full_name'], 'test')
-        self.assertEqual(response.data['patient']['address']['city'], 'test')
+        self.assertEqual(response.data['full_name'], 'test')
+        self.assertEqual(response.data['address'][0]['city'], 'test')
 
     def test_update_patient(self):
 
-        url = f'/accounts/home-update/'
+        url =f'/accounts/patient/{self.patient["id"]}/'
         data = {
 
 
-            'patient': {
+      
                 'id': self.patient['id'],
                 'marital_status': 'test',
                 'nationality': 'test',
@@ -70,25 +68,28 @@ class PostionTest(PostionTestSetup):
                     'id': Address.objects.get(user=self.patient['user']).id,
                     'street': 'test',
                     'city': 'test2',
-                    'governorate': 'test'
+                    'governorate': 'test',
+                   
                 },
                 'phone': {
                     'id': Phone.objects.get(user=self.patient['user']).id,
-                    'mobile': 'test'
+                    'mobile': 'test',
+                   
                 }
-            },
+          
 
 
         }
 
-        response = self.client.post('/accounts/postion-update/', data,
+        response = self.client.patch(url, data,
                                     format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        # print(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['patient']['full_name'], 'test2')
-        self.assertEqual(response.data['patient']['address']['city'], 'test2')
+        self.assertEqual(response.data['full_name'], 'test2')
+        self.assertEqual(response.data['address'][0]['city'], 'test2')
 
 
-class PostionPermissionTest(PostionTestSetup):
+class PatientPermissionTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
 
@@ -98,7 +99,7 @@ class PostionPermissionTest(PostionTestSetup):
 
     def test_create_patient(self):
         data = {
-            'patient': {
+   
                 'marital_status': 'test',
                 'nationality': 'test',
                 'full_name': 'test',
@@ -115,11 +116,11 @@ class PostionPermissionTest(PostionTestSetup):
                 'phone': {
                     'mobile': 'test'
                 }
-            },
+      
 
 
         }
-        url = '/accounts/postion-create/'
+        url = f'/accounts/patient/'
         response = self.client.post(url, data, format='json')
         # print(response.data)
         self.assertEqual(response.status_code, 401)
@@ -132,23 +133,23 @@ class PostionPermissionTest(PostionTestSetup):
         response = self.client.post(
             url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data['patient']['full_name'], 'test')
-        self.assertEqual(response.data['patient']['address']['street'], 'test')
+        self.assertEqual(response.data['full_name'], 'test')
+        self.assertEqual(response.data['address'][0]['street'], 'test')
 
-        # self.assertEqual(Patient.objects.get(national_id='012345678901234').full_name, 'test')
+        self.assertEqual(Patient.objects.get(national_id='012345678901234').full_name, 'test')
 
     def test_update_patient(self):
 
-        url = f'/accounts/postion-update/'
+        url = f'/accounts/patient/{self.patient["id"]}/'
         data = {
 
 
-            'patient': {
+       
                 'id': self.patient['id'],
                 'marital_status': 'test',
                 'nationality': 'test',
                 'full_name': 'test2',
-                'national_id': '01234567890123',
+                'national_id': '012345678901235',
                 'date_of_birth': '2000-01-01',
                 'gender': 'M',
                 'disease_type': 'test',
@@ -165,23 +166,24 @@ class PostionPermissionTest(PostionTestSetup):
                     'mobile': 'test'
                 }
 
-            },
+
 
         }
 
-        url = f'/accounts/postion-update/'
-        response = self.client.post(url, data, format='json')
+        # url = f'/accounts/patient/'
+        response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, 401)
 
-        response = self.client.post(
+        response = self.client.patch(
             url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
         self.assertEqual(response.status_code, 403)
 
-        response = self.client.post(
+        response = self.client.patch(
             url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        # print(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['patient']['full_name'], 'test2')
-        self.assertEqual(response.data['patient']['address']['city'], 'test2')
+        self.assertEqual(response.data['full_name'], 'test2')
+        self.assertEqual(response.data['address'][0]['city'], 'test2')
 
 
 def create_image_test():
@@ -196,7 +198,7 @@ def create_image_test():
     image.show()
 
 
-class PostionWithImageTest(PostionTestSetup):
+class PatientWithImageTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
 
