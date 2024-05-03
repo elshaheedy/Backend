@@ -1,7 +1,7 @@
 from accounts.tests.test_setup import *
 from accounts.models import *
 from django.urls import reverse
-class PermissionTest(PostionTestSetup):
+class PermissionTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.url = '/accounts/permission/'

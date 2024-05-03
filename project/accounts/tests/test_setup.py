@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 # from accounts.tests.test_setup import HomeTestSetup
 
 
-class PostionTestSetup(TestCase):
+class TestSetup(TestCase):
     def setUp(self) -> None:
         self.client = APIClient()
     def get_postion_token(self,postion):
@@ -34,8 +34,9 @@ class PostionTestSetup(TestCase):
         user = User.objects.create_user(username='test', password='test123')
         return user
     def create_patient(self,staff_token):
+   
         data={
-            'patient':{
+     
                 'marital_status':'test',
                 'nationality':'test',
                 'full_name':'test',
@@ -44,19 +45,21 @@ class PostionTestSetup(TestCase):
                 'gender':'M',
                 'disease_type':'test',
                 'blood_type':'test',
-            },
-            'address':{
-                'street':'test',
-                'city':'test',
-                'governorate':'test'
-            },
-            'phone':{
-                'mobile':'test'
-            }
+          
+                'address':{
+                    'street':'test',
+                    'city':'test',
+                    'governorate':'test'
+                },
+                'phone':{
+                    'mobile':'test'
+                }
+              
 
 
-        }
 
-        response=self.client.post('/accounts/postion-create/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + staff_token)
-        token=self.get_token(data['patient']['national_id'], data['patient']['national_id'])
-        return response.data['patient'],token
+            }   
+
+        response=self.client.post('/accounts/patient/',data,format='json',HTTP_AUTHORIZATION='Bearer ' + staff_token)
+        token=self.get_token(data['national_id'], data['national_id'])
+        return response.data,token
