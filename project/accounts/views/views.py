@@ -43,23 +43,6 @@ class AddressViewSet(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
     permission_classes = [OwnPermission]
 
-class PatientViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet to manage Patient model.
-    """
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-    permission_classes = [OwnPermission]
-
-
-
-class DoctorViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for handling Doctor model.
-    """
-    queryset = Doctor.objects.all()
-    serializer_class = DoctorSerializer
-    permission_classes = [OwnPermission]
 
 
 
@@ -73,24 +56,24 @@ class EmployeeViewSet(viewsets.ModelViewSet):
    
 
 
-class PostionCreate(GenericViewSet):
-    permission_classes = [StaffPermission]
-    serializer_class = GeneralSerializer
-    # @home_create_schema()
-    @swagger_auto_schema(operation_id="home_create")
-    def post(self, request, *args, **kwargs):
+# class PostionCreate(GenericViewSet):
+#     permission_classes = [StaffPermission]
+#     serializer_class = GeneralSerializer
+#     # @home_create_schema()
+#     @swagger_auto_schema(operation_id="home_create")
+#     def post(self, request, *args, **kwargs):
 
-        data= postion_create(request.data)
-        return Response(data, status=status.HTTP_201_CREATED)
-class PostionUpdate(GenericViewSet):
-    permission_classes = [StaffPermission]
-    serializer_class = GeneralSerializer
-    # @home_update_schema()
-    @swagger_auto_schema(operation_id="home_update")
-    def post(self, request, *args, **kwargs):
+#         data= postion_create(request.data)
+#         return Response(data, status=status.HTTP_201_CREATED)
+# class PostionUpdate(GenericViewSet):
+#     permission_classes = [StaffPermission]
+#     serializer_class = GeneralSerializer
+#     # @home_update_schema()
+#     @swagger_auto_schema(operation_id="home_update")
+#     def post(self, request, *args, **kwargs):
 
-        data= postion_update(request.data)
-        return Response(data, status=status.HTTP_200_OK)
+#         data= postion_update(request.data)
+#         return Response(data, status=status.HTTP_200_OK)
     
 
 class CustomTokenObtainPairView(TokenObtainPairView):

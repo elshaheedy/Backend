@@ -24,15 +24,17 @@ class ArabicNameProvider(BaseProvider):
             "جمال", "وليد", "مروان", "ناصر", "رشيد",
             "حسين", "سليمان", "عبدالرحمن", "فارس", "ياسر",
             "عليان", "رامي", "خضر", "طلال",
-            "حازم", "إياد", "أسامة", "أمين", "منصور",
-            "مالك", "نواف", "أكرم", "شريف", "أيمن"
+            "حازم", "أسامة", "منصور", "مالك", "نواف",  "شريف", "أيمن"
+        ]
+        arabic_names_same=[
+            "أسامة","أسامه","اسامه","اسَامه","احمد","أحمد","أمين","امين","إياد","إياد","أكرم","اكرم"
         ]
 
-        arabic_names = [ "نور", "إحسان","جهاد",",وسام","اسلام"]
+        arabic_names = [ "نور", "إحسان","جهاد",",وسام","اسلام","أسلام","اسلام","احسان"]
 
 
 
-        last=" ".join(random.choice(arabic_mens_names) for _ in range(3))
+        last=" ".join(random.choice(arabic_names_same) for _ in range(3))
         first=random.choice(arabic_names)
         return first+" "+last
 class AddressStreetProvider(BaseProvider):

@@ -27,8 +27,6 @@ class PatientSerializer(serializers.ModelSerializer):
     address = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
 
-    
-    
     class Meta:
         model = Patient
         # fields = '__all__'

@@ -2,7 +2,7 @@ from accounts.tests.test_setup import *
 from accounts.models import *
 
 
-class PatientTest(PostionTestSetup):
+class PatientTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.url = '/accounts/patient/'

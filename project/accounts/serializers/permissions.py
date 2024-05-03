@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
+from django.contrib.auth.models import User
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +21,21 @@ class UserToGroupSerializer(serializers.Serializer):
 class PermissionToUserSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     permission_ids = serializers.ListField(child=serializers.IntegerField())
+
+class PermissionToGroupSerializer(serializers.Serializer):
+    group_id = serializers.IntegerField()
+    permission_ids = serializers.ListField(child=serializers.IntegerField())
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = User
+        # fields = '__all__'
+        exclude = ['password']
+

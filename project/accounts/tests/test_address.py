@@ -2,7 +2,7 @@ from accounts.tests.test_setup import *
 from accounts.models import *
 
 
-class AddressTest(PostionTestSetup):
+class AddressTest(TestSetup):
     def setUp(self) -> None:
         super().setUp()
         self.url = '/accounts/address/'

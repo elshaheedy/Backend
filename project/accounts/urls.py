@@ -16,6 +16,7 @@ router.register('address', AddressViewSet)
 router.register('user-image', UserImageViewSet)
 router.register('group', GroupViewSet)
 router.register('permission', PermissionViewSet)
+router.register('user-details', UserDetails, basename='user-details')
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
@@ -23,9 +24,12 @@ urlpatterns = [
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('postion-create/', PostionCreate.as_view({'post': 'post'}), name='home-create'),
-    path('postion-update/', PostionUpdate.as_view({'post': 'post'}), name='home-update'),
-    path('assign-user-to-groups/', AssignUserToGroups.as_view({'post': 'post'}), name='assign-user-to-groups'),
-    path('assign-permissions-to-user/', AssignPermissionsToUser.as_view({'post': 'post'}), name='assign-permissions-to-user'),
-  
+    # path('postion-create/', PostionCreate.as_view({'post': 'post'}), name='home-create'),
+    # path('postion-update/', PostionUpdate.as_view({'post': 'post'}), name='home-update'),
+    # path('assign-user-to-groups/', AssignUserToGroups.as_view({'post': 'post'}), name='assign-user-to-groups'),
+    # path('assign-permissions-to-user/', AssignPermissionsToUser.as_view({'post': 'post'}), name='assign-permissions-to-user'),
+    # path('assign-permissions-to-group/', AssignPermissionsToGroup.as_view({'post': 'post'}), name='assign-permissions-to-group'),
+    # path('user-details/<int:user_id>/', UserDetails.as_view({'get': 'retrieve'}), name='user-details'),
+    # path('user-details/<int:pk>/', UserDetails.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update'}), name='user-details'),
+
 ]
