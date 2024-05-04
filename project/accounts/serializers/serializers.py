@@ -23,25 +23,24 @@ class AddressSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['is_deleted']
 class PatientSerializer(serializers.ModelSerializer):
-    phone = serializers.SerializerMethodField()
-    address = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
+
+    phone = PhoneSerializer(many=True, read_only=True, source='user.phones')
+    address = AddressSerializer(many=True,read_only=True, source='user.addresses')
+    image = UserImageSerializer(many=True, read_only=True, source='user.images')
+
+
 
     class Meta:
         model = Patient
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        # fields =['id','disease_type', 'blood_type','user', 'full_name', 'email', 'gender', 'marital_status', 'nationality', 'national_id', 'date_of_birth', 'notes', 'code', 'address', 'phone', 'image']
+
     
-    def get_phone(self, obj):
-        phones =Phone.objects.filter(user=obj.user)
-        return PhoneSerializer(phones, many=True).data
-        # return PhoneSerializer(obj.user.phone, many=True).data
-    def get_address(self, obj):
-        addresses =Address.objects.filter(user=obj.user)
-        return AddressSerializer(addresses, many=True).data
-    def get_image(self, obj):
-        images =UserImage.objects.filter(user=obj.user)
-        return UserImageSerializer(images, many=True).data
+        exclude = ['is_deleted']
+    # def to_representation(self, instance):
+    # #         # Override to_representation method to prefetch related objects
+    #         instance = Patient.objects.select_related('user').prefetch_related('user__phones', 'user__addresses').get(pk=instance.pk)
+
+    #         return super().to_representation(instance)
      
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:

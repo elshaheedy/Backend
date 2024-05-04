@@ -28,13 +28,15 @@ class Profile(models.Model):
 
 class UserImage(models.Model):
     image = models.ImageField(upload_to='user_images' )
-    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_image' )
+    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_images' )
+    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='images' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 class Phone(models.Model):
     mobile = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='phone' )
+    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='phones' )
+    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='phones' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -43,7 +45,8 @@ class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     governorate = models.CharField(max_length=255)
-    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='address' )
+    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='addresses' )
+    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='addresses' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -58,8 +61,8 @@ class Patient(Profile):
 
     
     
-    def __str__(self):
-        return self.first_name
+    # def __str__(self):
+    #     return self.first_name
 
 class Employee(Profile):
     def __str__(self):
