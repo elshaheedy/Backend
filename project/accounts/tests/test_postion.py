@@ -47,6 +47,7 @@ class PatientTest(TestSetup):
             national_id='012345678901234').full_name, 'test')
         self.assertEqual(response.data['full_name'], 'test')
         self.assertEqual(response.data['address'][0]['city'], 'test')
+        # self.assertEqual(response.data['address']['city'], 'test')
 
     def test_update_patient(self):
 
@@ -87,6 +88,7 @@ class PatientTest(TestSetup):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['full_name'], 'test2')
         self.assertEqual(response.data['address'][0]['city'], 'test2')
+        # self.assertEqual(response.data['address']['city'], 'test2')
 
 
 class PatientPermissionTest(TestSetup):
@@ -135,6 +137,7 @@ class PatientPermissionTest(TestSetup):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data['full_name'], 'test')
         self.assertEqual(response.data['address'][0]['street'], 'test')
+        # self.assertEqual(response.data['address']['street'], 'test')
 
         self.assertEqual(Patient.objects.get(national_id='012345678901234').full_name, 'test')
 
@@ -163,7 +166,7 @@ class PatientPermissionTest(TestSetup):
                 },
                 'phone': {
                     'id': Phone.objects.get(user=self.patient['user']).id,
-                    'mobile': 'test'
+                    'mobile': 'test2'
                 }
 
 
@@ -184,6 +187,7 @@ class PatientPermissionTest(TestSetup):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['full_name'], 'test2')
         self.assertEqual(response.data['address'][0]['city'], 'test2')
+        # self.assertEqual(response.data['address']['city'], 'test2')
 
 
 def create_image_test():
@@ -199,6 +203,7 @@ def create_image_test():
 
 
 class PatientWithImageTest(TestSetup):
+
     def setUp(self) -> None:
         super().setUp()
 
@@ -231,3 +236,11 @@ class PatientWithImageTest(TestSetup):
         self.assertEqual(response.status_code, 201)
         # remvove image
         os.remove("test_image.jpg")
+
+
+
+
+
+
+
+
