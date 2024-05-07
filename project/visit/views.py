@@ -48,22 +48,6 @@ class VisitViewSet(viewsets.ModelViewSet):
         rest_filters.OrderingFilter,
     ]
     filterset_class =  VisitFilter
-    def create(self, request, *args, **kwargs):
-    
-        serializer = self.get_serializer(data=request.data.pop('visit'))
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-      
-        if request.data.get('measurement'):
-            measurement=request.data.pop('measurement')
-            measurement['visit']=serializer.data['id']
-            measurement=MeasurementSerializer(data=measurement)
-            measurement.is_valid(raise_exception=True)
-            measurement.save()
-     
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=201, headers=headers)
-    
 class Statistics(GenericViewSet):
     # permission_classes=[IsAuthenticated]
     serializer_class=StatisticsSerializer

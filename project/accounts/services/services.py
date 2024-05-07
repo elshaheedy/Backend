@@ -1,25 +1,11 @@
-from accounts.models import Employee, Patient , Phone, Address, Doctor
+from accounts.models import Employee, Patient , Doctor
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
 
-from accounts.serializers import EmployeeSerializer, PatientSerializer, PhoneSerializer, AddressSerializer
 User = get_user_model()
 
-serializer_map = {
-    # 'employee': EmployeeSerializer,
-    # 'patient': PatientSerializer,
-    # 'doctor': EmployeeSerializer,
-    'phone': PhoneSerializer,
-    'address': AddressSerializer
-}
-model_map = {
-    # 'employee': Employee,
-    # 'patient': Patient,
-    # 'doctor': Doctor,
-    'phone': Phone,
-    'address': Address
-}
+
 
 def create_user(request_data):
     try:
@@ -32,34 +18,7 @@ def create_user(request_data):
     except :
         return "national_id already exists", None
 
-
-
-def create_model(model_data, user,SerializerClass):
-    model_data['user'] = user.id
-    serializer = SerializerClass(data=model_data)
-    if not serializer.is_valid():
-        return serializer.errors, "not valid"
-    model_instance = serializer.save()
-    return SerializerClass(model_instance).data,"created"
-
-def postion_create(request_data,SerializerClass):
-    massage, user = create_user(request_data)
-    if massage!="created":   return Response(massage, status=status.HTTP_400_BAD_REQUEST)
-    request_data['user'] = user.id
-    serializer  = SerializerClass(data=request_data)
-    if not serializer.is_valid():
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
-    serializer.save()
-  
-    for field in request_data:
-        if field not in  serializer_map :   continue
-        serializer_class = serializer_map.get(field)
-        sub_instance,massage  = create_model(request_data[field],user,serializer_class)
-        if massage!="created":   return Response(sub_instance, status=status.HTTP_400_BAD_REQUEST)
-
-    return Response(SerializerClass(serializer.instance).data, status=status.HTTP_201_CREATED)
-        
+   
 
 
 

@@ -30,18 +30,10 @@ class PatientFactory(factory.Factory):
     disease_type = factory.Faker("word")
     marital_status = factory.Faker("word")
     nationality = factory.Faker("word")
+    address=factory.Faker("address")
+    phone=factory.Faker("phone")
 
-class AddressFactory(factory.Factory):
-    class Meta:
-        model = Address
-    street = factory.Faker("street_name")
-    city = factory.Faker("city")
-    governorate = factory.Faker("state")
 
-class PhoneFactory(factory.Factory):
-    class Meta:
-        model = Phone
-    mobile = factory.Faker("phone_number")
 
 class UserImageFactory(factory.Factory):
     class Meta:

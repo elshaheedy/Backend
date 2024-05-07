@@ -37,8 +37,10 @@ class ArabicNameProvider(BaseProvider):
         last=" ".join(random.choice(arabic_names_same) for _ in range(3))
         first=random.choice(arabic_names)
         return first+" "+last
-class AddressStreetProvider(BaseProvider):
-    def  street_name(self):
+
+
+class AddressProvider(BaseProvider):
+    def  address(self):
         egyptian_village_names = [
             "الدلجا",
             "كفر الشيخ",
@@ -62,68 +64,18 @@ class AddressStreetProvider(BaseProvider):
             "أبو حمص"
         ]
 
-        return random.choice(egyptian_village_names)
-class AddressCityProvider(BaseProvider):
-    def  city(self):
-        egyptian_village_names = [
-            "الدلجا",
-            "كفر الشيخ",
-            "بركة السبع",
-            "قلوص",
-            "الشهداء",
-            "سمسطا",
-            "دمنهور",
-            "كفر الشيخ الجديدة",
-            "بدر",
-            "برمبال",
-            "كفر المنجوم",
-            "النوبارية",
-            "الرياض",
-            "البيضاء",
-            "الرزايقة",
-            "قرية النيل",
-            "دسوق",
-            "كفر البطيخ",
-            "أبو النمرس",
-            "أبو حمص"
-        ]
-
-        return random.choice(egyptian_village_names)
-
-class AddressGovernorateProvider(BaseProvider):
-    def  state(self):
-        egyptian_village_names = [
-            "الدلجا",
-            "كفر الشيخ",
-            "بركة السبع",
-            "قلوص",
-            "الشهداء",
-            "سمسطا",
-            "دمنهور",
-            "كفر الشيخ الجديدة",
-            "بدر",
-            "برمبال",
-            "كفر المنجوم",
-            "النوبارية",
-            "الرياض",
-            "البيضاء",
-            "الرزايقة",
-            "قرية النيل",
-            "دسوق",
-            "كفر البطيخ",
-            "أبو النمرس",
-            "أبو حمص"
-        ]
-
-        return random.choice(egyptian_village_names)
+        return {
+            'street':random.choice(egyptian_village_names),
+            'city':random.choice(egyptian_village_names),
+            'governorate':random.choice(egyptian_village_names),
+        } 
     
 
 factory.Faker.add_provider(AlphanumericCode)
 factory.Faker.add_provider(NationalityProvider)
 factory.Faker.add_provider(ArabicNameProvider)
-factory.Faker.add_provider(AddressStreetProvider)
-factory.Faker.add_provider(AddressCityProvider)
-factory.Faker.add_provider(AddressGovernorateProvider)
+factory.Faker.add_provider(AddressProvider)
+
 
 class DoctorSpecializationProvider(BaseProvider):
     def  doctor_specialization(self):
@@ -157,3 +109,11 @@ class DaysProvider(BaseProvider):
         return " ".join(random.sample(days, 3))
 
 factory.Faker.add_provider(DaysProvider)
+
+
+class PhoneProvider(BaseProvider):
+    def  phone(self):
+       
+        return " ".join("".join(str(random.randint(0, 9)) for _ in range(11)))
+
+factory.Faker.add_provider(PhoneProvider)
