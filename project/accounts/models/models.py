@@ -20,6 +20,8 @@ class Profile(models.Model):
     national_id= models.CharField(max_length=255)
     date_of_birth = models.DateField(blank=True, null=True)
     notes= models.TextField(blank=True)
+    address = models.JSONField(null=True, blank=True)
+    phone = models.JSONField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,26 +35,7 @@ class UserImage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
-class Phone(models.Model):
-    mobile = models.CharField(max_length=255)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='phones' )
-    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='phones' )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
 
-class Address(models.Model):
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    governorate = models.CharField(max_length=255)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='addresses' )
-    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='addresses' )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
-    
-    def __str__(self):
-        return self.street+" "+self.city
 
 class Patient(Profile):
     disease_type  = models.CharField(max_length=255)

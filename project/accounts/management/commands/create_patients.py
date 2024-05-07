@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create and save sample data for Category
 
-        users_count = max(12-len(Patient.objects.all()), 0)
+        users_count = max(13-len(Patient.objects.all()), 0)
         users = UserFactory.create_batch(
             users_count,
         )
@@ -58,30 +58,30 @@ class Command(BaseCommand):
                 f"Successfully created and saved {len(images)} images")
         )
 
-        addresses = AddressFactory.create_batch(
-            users_count,
-            user=factory.Iterator(cycle(users)),
-        )
+        # addresses = AddressFactory.create_batch(
+        #     users_count,
+        #     user=factory.Iterator(cycle(users)),
+        # )
 
-        for address in addresses:
-            address.save()
+        # for address in addresses:
+        #     address.save()
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"Successfully created and saved {len(addresses)} addresses"
-            )
-        )
+        # self.stdout.write(
+        #     self.style.SUCCESS(
+        #         f"Successfully created and saved {len(addresses)} addresses"
+        #     )
+        # )
 
-        phones = PhoneFactory.create_batch(
-            users_count,
-            user=factory.Iterator(cycle(users)),
-        )
+        # phones = PhoneFactory.create_batch(
+        #     users_count,
+        #     user=factory.Iterator(cycle(users)),
+        # )
 
-        for phone in phones:
-            phone.save()
+        # for phone in phones:
+        #     phone.save()
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"Successfully created and saved {len(phones)} phones")
-        )
+        # self.stdout.write(
+        #     self.style.SUCCESS(
+        #         f"Successfully created and saved {len(phones)} phones")
+        # )
 

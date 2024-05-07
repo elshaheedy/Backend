@@ -15,22 +15,15 @@ class PatientViewSet(viewsets.ModelViewSet):
 
     serializer_class = PatientSerializer
     permission_classes = [OwnPermission]
-    def get_queryset(self):
-            queryset = Patient.objects.select_related('user').prefetch_related('user__phones', 'user__addresses', 'user__images').all()
-            return queryset
     
 
-    def create(self , request, *args, **kwargs):
-        response= postion_create(request.data,PatientSerializer)
-        return response
-    def update(self, request, *args, **kwargs):
-        response= postion_update(self.get_object(),request.data,PatientSerializer)
-        return    response
 
-    def partial_update(self, request, *args, **kwargs):
-        response= postion_update(self.get_object(),request.data,PatientSerializer)
-        # return    response
-        if response.status_code == status.HTTP_200_OK:
-            return Response(PatientSerializer(self.get_object()).data, status=status.HTTP_200_OK)
-        else:
-            return Response(response.data, status=status.HTTP_400_BAD_REQUEST)
+    def create(self , request, *args, **kwargs):
+        msg,user=create_user(request.data)
+        if msg!="created":
+            return Response(msg,status=status.HTTP_400_BAD_REQUEST)
+
+        request.data.update({'user':user.id})
+        
+        return super().create(request, *args, **kwargs) 
+ 
