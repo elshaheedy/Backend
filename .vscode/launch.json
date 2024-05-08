@@ -11,8 +11,8 @@
             "request": "launch",
             "args": [
                 "test",
-                // "accounts.tests.test_patient"
-                "visit"
+                "accounts.tests.test_patient"
+                // "visit"
             ],
             "django": true,
             "autoStartBrowser": false,
