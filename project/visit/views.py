@@ -11,17 +11,17 @@ from django_filters import rest_framework as filters
 from .filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
-class MeasurementViewSet(viewsets.ModelViewSet):
-    queryset = Measurement.objects.all()
-    serializer_class = MeasurementSerializer
-    pagination_class = VisitPagination
-    permission_classes=[RelatedVisitPermission]
-    filter_backends = [
-        DjangoFilterBackend,
-        rest_filters.SearchFilter,
-        rest_filters.OrderingFilter,
-    ]
-    filterset_class =  MeasurementFilter
+# class MeasurementViewSet(viewsets.ModelViewSet):
+#     queryset = Measurement.objects.all()
+#     serializer_class = MeasurementSerializer
+#     pagination_class = VisitPagination
+#     permission_classes=[RelatedVisitPermission]
+#     filter_backends = [
+#         DjangoFilterBackend,
+#         rest_filters.SearchFilter,
+#         rest_filters.OrderingFilter,
+#     ]
+#     filterset_class =  MeasurementFilter
 class AttachmentViewSet(viewsets.ModelViewSet):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer

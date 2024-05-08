@@ -91,3 +91,26 @@ class TestSetup(TestCase):
         response = self.client.post(
             '/visit/visit/', data, format='json', HTTP_AUTHORIZATION='Bearer ' + staff_token)
         return response.data
+    def create_doctor(self, staff_token,
+                     full_name='test',
+                     national_id='01234567890123',
+                     speciality='test',
+                     license_number='test',
+                     experience_years=2,
+                     work_days='test'
+                     ):
+        data = {
+            'full_name': full_name,
+            'national_id': national_id,
+            'speciality': speciality,
+            'license_number': license_number,
+            'experience_years': experience_years,
+            'work_days': work_days
+        }
+
+        response = self.client.post(
+            '/accounts/doctor/', data, format='json', HTTP_AUTHORIZATION='Bearer ' + staff_token)
+        self.assertEqual(response.status_code, 201)
+        token = self.get_token(data['national_id'], data['national_id'])
+    
+        return response.data, token

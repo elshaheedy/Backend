@@ -10,7 +10,9 @@
             "type": "debugpy",
             "request": "launch",
             "args": [
-                "test","accounts.tests.test_patient"
+                "test",
+                // "accounts.tests.test_patient"
+                "visit"
             ],
             "django": true,
             "autoStartBrowser": false,

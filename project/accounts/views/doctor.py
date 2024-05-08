@@ -6,6 +6,10 @@ from accounts.services import *
 from rest_framework.response import Response
 from rest_framework import status
 from accounts.permissions import  OwnPermission
+from django_filters import rest_framework as filters
+from accounts.filters         import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters as rest_filters
 
 
 class DoctorViewSet(viewsets.ModelViewSet):
@@ -15,13 +19,23 @@ class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     permission_classes = [OwnPermission]
-    # def create(self , request, *args, **kwargs):
-    #     response= postion_create(request.data,DoctorSerializer)
-    #     return response
-    # def update(self, request, *args, **kwargs):
-    #     response= postion_update(self.get_object(),request.data, DoctorSerializer)
-    #     return    response
 
-    # def partial_update(self, request, *args, **kwargs):
-    #     response= postion_update(self.get_object(),request.data, DoctorSerializer)
-    #     return response
+
+    
+    filter_backends = [
+        DjangoFilterBackend,
+        rest_filters.SearchFilter,
+        rest_filters.OrderingFilter,
+    ]
+    filterset_class =  PatientFilter
+
+
+    def create(self , request, *args, **kwargs):
+        msg,user=create_user(request.data)
+        if msg!="created":
+            return Response(msg,status=status.HTTP_400_BAD_REQUEST)
+
+        request.data.update({'user':user.id})
+        
+        return super().create(request, *args, **kwargs) 
+ 
