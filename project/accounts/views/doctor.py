@@ -15,13 +15,13 @@ class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     permission_classes = [OwnPermission]
-    def create(self , request, *args, **kwargs):
-        response= postion_create(request.data,DoctorSerializer)
-        return response
-    def update(self, request, *args, **kwargs):
-        response= postion_update(self.get_object(),request.data, DoctorSerializer)
-        return    response
+    # def create(self , request, *args, **kwargs):
+    #     response= postion_create(request.data,DoctorSerializer)
+    #     return response
+    # def update(self, request, *args, **kwargs):
+    #     response= postion_update(self.get_object(),request.data, DoctorSerializer)
+    #     return    response
 
-    def partial_update(self, request, *args, **kwargs):
-        response= postion_update(self.get_object(),request.data, DoctorSerializer)
-        return response
+    # def partial_update(self, request, *args, **kwargs):
+    #     response= postion_update(self.get_object(),request.data, DoctorSerializer)
+    #     return response

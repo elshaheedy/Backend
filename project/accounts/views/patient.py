@@ -7,6 +7,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from accounts.permissions import  OwnPermission
 from django.db.models import Prefetch
+from django_filters import rest_framework as filters
+from accounts.filters         import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters as rest_filters
+
 class PatientViewSet(viewsets.ModelViewSet):
     """
     ViewSet to manage Patient model.
@@ -16,6 +21,12 @@ class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     permission_classes = [OwnPermission]
     
+    filter_backends = [
+        DjangoFilterBackend,
+        rest_filters.SearchFilter,
+        rest_filters.OrderingFilter,
+    ]
+    filterset_class =  PatientFilter
 
 
     def create(self , request, *args, **kwargs):
