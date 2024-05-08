@@ -73,7 +73,7 @@ class Statistics(GenericViewSet):
      
 
         data = {
-            'total_visits': Visit.Doctor.objects.count(),
+            'total_visits': Visit.objects.count(),
             'total_patients': Patient.objects.count(),
             'total_doctors': Doctor.objects.count(),
             'total_employees': Employee.objects.count(),
