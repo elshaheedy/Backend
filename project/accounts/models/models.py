@@ -14,12 +14,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , null=True )
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True, null=True)
-    gender = models.CharField(max_length=255)
+    gender = models.CharField(max_length=255, null=True,blank=True)
     marital_status = models.CharField(max_length=255 ,null=True,blank=True)
     nationality = models.CharField(max_length=255 ,default="Egypt")
     national_id= models.CharField(max_length=255)
     date_of_birth = models.DateField(blank=True, null=True)
-    notes= models.TextField(blank=True)
+    notes= models.TextField(blank=True,null=True)
     address = models.JSONField(null=True, blank=True)
     phone = models.JSONField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
@@ -38,9 +38,9 @@ class UserImage(models.Model):
 
 
 class Patient(Profile):
-    disease_type  = models.CharField(max_length=255)
-    blood_type = models.CharField(max_length=255)
-    code=ShortUUIDField(unique=True, max_length=10,editable=False,blank=True)
+    disease_type  = models.CharField(max_length=255,blank=True,null=True)
+    blood_type = models.CharField(max_length=255,blank=True,null=True)  
+    code=ShortUUIDField(unique=True, max_length=10,editable=False,blank=True,null=True)
 
     
     
