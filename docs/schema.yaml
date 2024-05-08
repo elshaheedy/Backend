@@ -7,7 +7,79 @@ paths:
     get:
       operationId: listPatients
       description: ViewSet to manage Patient model.
-      parameters: []
+      parameters:
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: full_name
+        required: false
+        in: query
+        description: full_name
+        schema:
+          type: string
+      - name: created_at__year
+        required: false
+        in: query
+        description: created_at__year
+        schema:
+          type: string
+      - name: created_at__month
+        required: false
+        in: query
+        description: created_at__month
+        schema:
+          type: string
+      - name: created_at__day
+        required: false
+        in: query
+        description: created_at__day
+        schema:
+          type: string
+      - name: code
+        required: false
+        in: query
+        description: code
+        schema:
+          type: string
+      - name: nationality
+        required: false
+        in: query
+        description: nationality
+        schema:
+          type: string
+      - name: national_id
+        required: false
+        in: query
+        description: national_id
+        schema:
+          type: string
+      - name: disease_type
+        required: false
+        in: query
+        description: disease_type
+        schema:
+          type: string
+      - name: blood_type
+        required: false
+        in: query
+        description: blood_type
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -54,6 +126,78 @@ paths:
         description: A unique integer value identifying this patient.
         schema:
           type: string
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: full_name
+        required: false
+        in: query
+        description: full_name
+        schema:
+          type: string
+      - name: created_at__year
+        required: false
+        in: query
+        description: created_at__year
+        schema:
+          type: string
+      - name: created_at__month
+        required: false
+        in: query
+        description: created_at__month
+        schema:
+          type: string
+      - name: created_at__day
+        required: false
+        in: query
+        description: created_at__day
+        schema:
+          type: string
+      - name: code
+        required: false
+        in: query
+        description: code
+        schema:
+          type: string
+      - name: nationality
+        required: false
+        in: query
+        description: nationality
+        schema:
+          type: string
+      - name: national_id
+        required: false
+        in: query
+        description: national_id
+        schema:
+          type: string
+      - name: disease_type
+        required: false
+        in: query
+        description: disease_type
+        schema:
+          type: string
+      - name: blood_type
+        required: false
+        in: query
+        description: blood_type
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -71,6 +215,78 @@ paths:
         in: path
         required: true
         description: A unique integer value identifying this patient.
+        schema:
+          type: string
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: full_name
+        required: false
+        in: query
+        description: full_name
+        schema:
+          type: string
+      - name: created_at__year
+        required: false
+        in: query
+        description: created_at__year
+        schema:
+          type: string
+      - name: created_at__month
+        required: false
+        in: query
+        description: created_at__month
+        schema:
+          type: string
+      - name: created_at__day
+        required: false
+        in: query
+        description: created_at__day
+        schema:
+          type: string
+      - name: code
+        required: false
+        in: query
+        description: code
+        schema:
+          type: string
+      - name: nationality
+        required: false
+        in: query
+        description: nationality
+        schema:
+          type: string
+      - name: national_id
+        required: false
+        in: query
+        description: national_id
+        schema:
+          type: string
+      - name: disease_type
+        required: false
+        in: query
+        description: disease_type
+        schema:
+          type: string
+      - name: blood_type
+        required: false
+        in: query
+        description: blood_type
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
         schema:
           type: string
       requestBody:
@@ -103,6 +319,78 @@ paths:
         description: A unique integer value identifying this patient.
         schema:
           type: string
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: full_name
+        required: false
+        in: query
+        description: full_name
+        schema:
+          type: string
+      - name: created_at__year
+        required: false
+        in: query
+        description: created_at__year
+        schema:
+          type: string
+      - name: created_at__month
+        required: false
+        in: query
+        description: created_at__month
+        schema:
+          type: string
+      - name: created_at__day
+        required: false
+        in: query
+        description: created_at__day
+        schema:
+          type: string
+      - name: code
+        required: false
+        in: query
+        description: code
+        schema:
+          type: string
+      - name: nationality
+        required: false
+        in: query
+        description: nationality
+        schema:
+          type: string
+      - name: national_id
+        required: false
+        in: query
+        description: national_id
+        schema:
+          type: string
+      - name: disease_type
+        required: false
+        in: query
+        description: disease_type
+        schema:
+          type: string
+      - name: blood_type
+        required: false
+        in: query
+        description: blood_type
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -131,6 +419,78 @@ paths:
         in: path
         required: true
         description: A unique integer value identifying this patient.
+        schema:
+          type: string
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: full_name
+        required: false
+        in: query
+        description: full_name
+        schema:
+          type: string
+      - name: created_at__year
+        required: false
+        in: query
+        description: created_at__year
+        schema:
+          type: string
+      - name: created_at__month
+        required: false
+        in: query
+        description: created_at__month
+        schema:
+          type: string
+      - name: created_at__day
+        required: false
+        in: query
+        description: created_at__day
+        schema:
+          type: string
+      - name: code
+        required: false
+        in: query
+        description: code
+        schema:
+          type: string
+      - name: nationality
+        required: false
+        in: query
+        description: nationality
+        schema:
+          type: string
+      - name: national_id
+        required: false
+        in: query
+        description: national_id
+        schema:
+          type: string
+      - name: disease_type
+        required: false
+        in: query
+        description: disease_type
+        schema:
+          type: string
+      - name: blood_type
+        required: false
+        in: query
+        description: blood_type
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
         schema:
           type: string
       responses:
@@ -401,276 +761,6 @@ paths:
         in: path
         required: true
         description: A unique integer value identifying this doctor.
-        schema:
-          type: string
-      responses:
-        '204':
-          description: ''
-      tags:
-      - accounts
-  /accounts/phone/:
-    get:
-      operationId: listPhones
-      description: ViewSet for handling Phone model.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Phone'
-          description: ''
-      tags:
-      - accounts
-    post:
-      operationId: createPhone
-      description: ViewSet for handling Phone model.
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Phone'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Phone'
-          description: ''
-      tags:
-      - accounts
-  /accounts/phone/{id}/:
-    get:
-      operationId: retrievePhone
-      description: ViewSet for handling Phone model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this phone.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Phone'
-          description: ''
-      tags:
-      - accounts
-    put:
-      operationId: updatePhone
-      description: ViewSet for handling Phone model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this phone.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Phone'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Phone'
-          description: ''
-      tags:
-      - accounts
-    patch:
-      operationId: partialUpdatePhone
-      description: ViewSet for handling Phone model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this phone.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Phone'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Phone'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Phone'
-          description: ''
-      tags:
-      - accounts
-    delete:
-      operationId: destroyPhone
-      description: ViewSet for handling Phone model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this phone.
-        schema:
-          type: string
-      responses:
-        '204':
-          description: ''
-      tags:
-      - accounts
-  /accounts/address/:
-    get:
-      operationId: listAddresses
-      description: ViewSet for handling Address model.
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Address'
-          description: ''
-      tags:
-      - accounts
-    post:
-      operationId: createAddress
-      description: ViewSet for handling Address model.
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Address'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-          description: ''
-      tags:
-      - accounts
-  /accounts/address/{id}/:
-    get:
-      operationId: retrieveAddress
-      description: ViewSet for handling Address model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this address.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-          description: ''
-      tags:
-      - accounts
-    put:
-      operationId: updateAddress
-      description: ViewSet for handling Address model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this address.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Address'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-          description: ''
-      tags:
-      - accounts
-    patch:
-      operationId: partialUpdateAddress
-      description: ViewSet for handling Address model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this address.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Address'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-          description: ''
-      tags:
-      - accounts
-    delete:
-      operationId: destroyAddress
-      description: ViewSet for handling Address model.
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this address.
         schema:
           type: string
       responses:
@@ -2694,64 +2784,6 @@ components:
         id:
           type: integer
           readOnly: true
-        phone:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                readOnly: true
-              mobile:
-                type: string
-                maxLength: 255
-              created_at:
-                type: string
-                format: date-time
-                readOnly: true
-              updated_at:
-                type: string
-                format: date-time
-                readOnly: true
-              user:
-                type: integer
-            required:
-            - mobile
-            - user
-          readOnly: true
-        address:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                readOnly: true
-              street:
-                type: string
-                maxLength: 255
-              city:
-                type: string
-                maxLength: 255
-              governorate:
-                type: string
-                maxLength: 255
-              created_at:
-                type: string
-                format: date-time
-                readOnly: true
-              updated_at:
-                type: string
-                format: date-time
-                readOnly: true
-              user:
-                type: integer
-            required:
-            - street
-            - city
-            - governorate
-            - user
-          readOnly: true
         image:
           type: array
           items:
@@ -2777,6 +2809,26 @@ components:
             - image
             - user
           readOnly: true
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            governorate:
+              type: string
+          required:
+          - street
+          - city
+          - governorate
+        phone:
+          type: object
+          properties:
+            mobile:
+              type: string
+          required:
+          - mobile
         full_name:
           type: string
           maxLength: 255
@@ -2824,6 +2876,7 @@ components:
           type: integer
           nullable: true
       required:
+      - phone
       - full_name
       - gender
       - national_id
@@ -2861,6 +2914,12 @@ components:
           nullable: true
         notes:
           type: string
+        address:
+          type: object
+          nullable: true
+        phone:
+          type: object
+          nullable: true
         created_at:
           type: string
           format: date-time
@@ -2908,6 +2967,12 @@ components:
           nullable: true
         notes:
           type: string
+        address:
+          type: object
+          nullable: true
+        phone:
+          type: object
+          nullable: true
         created_at:
           type: string
           format: date-time
@@ -2941,58 +3006,6 @@ components:
       - license_number
       - experience_years
       - work_days
-    Phone:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        mobile:
-          type: string
-          maxLength: 255
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        user:
-          type: integer
-      required:
-      - mobile
-      - user
-    Address:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        street:
-          type: string
-          maxLength: 255
-        city:
-          type: string
-          maxLength: 255
-        governorate:
-          type: string
-          maxLength: 255
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-        user:
-          type: integer
-      required:
-      - street
-      - city
-      - governorate
-      - user
     UserImage:
       type: object
       properties:

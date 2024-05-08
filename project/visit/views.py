@@ -48,15 +48,35 @@ class VisitViewSet(viewsets.ModelViewSet):
         rest_filters.OrderingFilter,
     ]
     filterset_class =  VisitFilter
+# class Statistics(GenericViewSet):
+#     # permission_classes=[IsAuthenticated]
+#     serializer_class=StatisticsSerializer
+#     def get (self, request, *args, **kwargs):
+#         data={
+#             'total_visits':Visit.objects.count(),
+#             'total_patients':Patient.objects.count(),
+#             'total_doctors':Doctor.objects.count(),
+#             'total_employees':Employee.objects.count(),
+#         }
+
+#         return Response(data)
+
 class Statistics(GenericViewSet):
-    # permission_classes=[IsAuthenticated]
     serializer_class=StatisticsSerializer
-    def get (self, request, *args, **kwargs):
-        data={
-            'total_visits':Visit.objects.count(),
-            'total_patients':Patient.objects.count(),
-            'total_doctors':Doctor.objects.count(),
-            'total_employees':Employee.objects.count(),
+    filter_backends = [
+        DjangoFilterBackend,
+
+    ]
+    filterset_class =  StatisticsFilter
+
+    def get(self, request, *args, **kwargs):
+     
+
+        data = {
+            'total_visits': Visit.Doctor.objects.count(),
+            'total_patients': Patient.objects.count(),
+            'total_doctors': Doctor.objects.count(),
+            'total_employees': Employee.objects.count(),
         }
 
         return Response(data)
