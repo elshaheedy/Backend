@@ -9,15 +9,15 @@ class UserImageSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['is_deleted']
 class PhoneSerializer(serializers.Serializer):
-    mobile=serializers.CharField()
+    mobile=serializers.CharField(required=False)
 class AddressSerializer(serializers.Serializer):
 
-    # street = serializers.CharField(required=False)
-    # city = serializers.CharField(required=False)
-    # governorate = serializers.CharField(required=False)
-    street = serializers.CharField()
-    city = serializers.CharField()
-    governorate = serializers.CharField()
+    street = serializers.CharField(required=False)
+    city = serializers.CharField(required=False)
+    governorate = serializers.CharField(required=False)
+    # street = serializers.CharField()
+    # city = serializers.CharField()
+    # governorate = serializers.CharField()
     class Meta:
         fields = ['governorate', 'city', 'street']
 

@@ -374,3 +374,5 @@ class PatientPhonesTest(TestSetup):
         self.assertEqual(response.data['full_name'], 'test2')
         self.assertEqual(response.data['address']['city'], 'test2')
 
+
+
