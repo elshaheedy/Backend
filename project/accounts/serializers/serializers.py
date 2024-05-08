@@ -26,7 +26,7 @@ class PatientSerializer(serializers.ModelSerializer):
 
     image = UserImageSerializer(many=True, read_only=True, source='user.images')
     address =AddressSerializer( required=False)
-    phone=PhoneSerializer(PhoneSerializer)
+    phone=PhoneSerializer(PhoneSerializer,required=False)
     class Meta:
         model = Patient
 
