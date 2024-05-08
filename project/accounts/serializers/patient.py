@@ -8,19 +8,18 @@ class UserImageSerializer(serializers.ModelSerializer):
         model = UserImage
         # fields = '__all__'
         exclude = ['is_deleted']
+
 class PhoneSerializer(serializers.Serializer):
     mobile=serializers.CharField(required=False)
+
+    
 class AddressSerializer(serializers.Serializer):
 
     street = serializers.CharField(required=False)
     city = serializers.CharField(required=False)
     governorate = serializers.CharField(required=False)
-    # street = serializers.CharField()
-    # city = serializers.CharField()
-    # governorate = serializers.CharField()
     class Meta:
         fields = ['governorate', 'city', 'street']
-
 
 class PatientSerializer(serializers.ModelSerializer):
 
@@ -36,21 +35,5 @@ class PatientSerializer(serializers.ModelSerializer):
         address_serializer = AddressSerializer(data=value)
         if not address_serializer.is_valid() or value!=address_serializer.data:
             raise serializers.ValidationError("Invalid address")
+        # print(value,address_serializer.data)
         return value
-
-     
-class EmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employee
-        # fields = '__all__'
-        exclude = ['is_deleted']
-
-
-class DoctorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Doctor
-        # fields = '__all__'
-        exclude = ['is_deleted']
-
-
-

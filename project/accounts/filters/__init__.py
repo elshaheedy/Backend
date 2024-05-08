@@ -13,7 +13,7 @@ class  PatientFilter(filters.FilterSet):
             'user': ['exact'],
             'full_name': ['exact'],
             'created_at': ['year', 'month', 'day'],
-            'code': ['exact'],
+            # 'code': ['exact'],
             'nationality': ['exact'],
             'national_id': ['exact'],
             'disease_type': ['exact'],

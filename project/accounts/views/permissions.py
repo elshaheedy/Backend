@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView   
 from django.http import Http404
+from rest_framework_simplejwt.views import TokenObtainPairView
 
  
 from rest_framework.viewsets import GenericViewSet
@@ -30,3 +31,15 @@ class UserDetails(GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelM
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser]
+
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        response= super().post(request, *args, **kwargs)
+        try:
+            response.data['user']= UserSerializer(User.objects.get(username=request.data['username'])).data
+        except:
+            pass
+
+        return response

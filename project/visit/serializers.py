@@ -34,18 +34,7 @@ class VisitSerializer(serializers.ModelSerializer):
         model = Visit
         # fields = '__all__'
         exclude = ['is_deleted']
-    # def to_representation(self, instance):
-    #     data= super().to_representation(instance)
-    #     messurement=Measurement.objects.filter(visit=data['id'])
-    #     data['measurement']=MeasurementSerializer(messurement,many=True).data
-    #     attachment=Attachment.objects.filter(visit=data['id'])
-    #     data['attachment']=AttachmentSerializer(attachment,many=True).data
-    #     return data
 
-#     class Meta:
-#         model = Measurement
-#         # fields = '__all__'
-#         exclude = ['is_deleted']
 
 class StatisticsSerializer(serializers.Serializer):
     total_visits=serializers.IntegerField()

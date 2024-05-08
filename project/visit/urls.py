@@ -8,7 +8,6 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register('visit', VisitViewSet)
-# router.register('measurement', MeasurementViewSet)
 router.register('attachment', AttachmentViewSet)
 
 # from django.contrib.auth.views import LoginView, LogoutView

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import Patient
-from accounts.serializers import PatientSerializer
+from accounts.serializers import *
 from accounts.services import *
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,6 +11,15 @@ from django_filters import rest_framework as filters
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
+
+class UserImageViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for handling UserImage model.
+    """
+    queryset = UserImage.objects.all()
+    serializer_class = UserImageSerializer
+    permission_classes = [OwnPermission]
+
 
 class PatientViewSet(viewsets.ModelViewSet):
     """

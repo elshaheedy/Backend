@@ -1,5 +1,5 @@
 from visit.permissions import VisitPermission, RelatedVisitPermission
-from .pagination      import VisitPagination
+from .pagination      import *
 from .serializers     import *
 from .models          import *
 from rest_framework   import viewsets
@@ -11,21 +11,11 @@ from django_filters import rest_framework as filters
 from .filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
-# class MeasurementViewSet(viewsets.ModelViewSet):
-#     queryset = Measurement.objects.all()
-#     serializer_class = MeasurementSerializer
-#     pagination_class = VisitPagination
-#     permission_classes=[RelatedVisitPermission]
-#     filter_backends = [
-#         DjangoFilterBackend,
-#         rest_filters.SearchFilter,
-#         rest_filters.OrderingFilter,
-#     ]
-#     filterset_class =  MeasurementFilter
+
 class AttachmentViewSet(viewsets.ModelViewSet):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
-    pagination_class = VisitPagination
+    pagination_class = CustomPagination
     permission_classes=[RelatedVisitPermission]
     filter_backends = [
         DjangoFilterBackend,
@@ -40,7 +30,7 @@ class AttachmentViewSet(viewsets.ModelViewSet):
 class VisitViewSet(viewsets.ModelViewSet):
     queryset = Visit.objects.all()
     serializer_class = VisitSerializer
-    pagination_class=VisitPagination
+    pagination_class=CustomPagination
     permission_classes=[VisitPermission]
     filter_backends = [
         DjangoFilterBackend,
@@ -48,18 +38,8 @@ class VisitViewSet(viewsets.ModelViewSet):
         rest_filters.OrderingFilter,
     ]
     filterset_class =  VisitFilter
-# class Statistics(GenericViewSet):
-#     # permission_classes=[IsAuthenticated]
-#     serializer_class=StatisticsSerializer
-#     def get (self, request, *args, **kwargs):
-#         data={
-#             'total_visits':Visit.objects.count(),
-#             'total_patients':Patient.objects.count(),
-#             'total_doctors':Doctor.objects.count(),
-#             'total_employees':Employee.objects.count(),
-#         }
+    
 
-#         return Response(data)
 
 class Statistics(GenericViewSet):
     serializer_class=StatisticsSerializer
