@@ -23,3 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['password']
 
+class CheckNationalSerializer(serializers.Serializer):
+    national_id =serializers.CharField(max_length=255)
+class CheckEmailSerializer(serializers.Serializer):
+    email =serializers.CharField(max_length=255)

@@ -23,37 +23,49 @@ class TestSetup(TestCase):
         # if 'access' not in token.data:
             # print('no access',token.data,username,password)
         return token.data['access']
-    def create_staff(self):
-        user=User.objects.create_user(username='stafftest', password='test123')
+    def create_staff(self,username='stafftest', password='test123'):
+        user=User.objects.create_user(username=username, password=password)
         user.is_staff = True
         user.save()
-        token=self.get_token('stafftest','test123')
+        token=self.get_token(username, password)
         return user,token
     
     def create_user(self):
         user = User.objects.create_user(username='test', password='test123')
         return user
-    def create_patient(self,staff_token):
+    def create_patient(self,staff_token,national_id='01234567890123',
+                       email='test1@test.com',
+                       full_name='test',
+                       date_of_birth='2000-01-01',
+                       gender='M',
+                       disease_type='test',
+                       blood_type='test',
+                       marital_status='test',
+                       nationality='test',
+                       address={
+                           'street':'test',
+                           'city':'test',
+                           'governorate':'test'
+                       },
+                       phone={
+                           'mobile':'test'
+                       }
+                       
+                       ):
    
         data={
      
-                'marital_status':'test',
-                'nationality':'test',
-                'full_name':'test',
-                'national_id':'01234567890123',
-                'date_of_birth':'2000-01-01',
-                'gender':'M',
-                'disease_type':'test',
-                'blood_type':'test',
-          
-                'address':{
-                    'street':'test',
-                    'city':'test',
-                    'governorate':'test'
-                },
-                'phone':{
-                    'mobile':'test'
-                }
+               'national_id': national_id,
+               'email': email,
+               'full_name': full_name,
+               'date_of_birth': date_of_birth,
+               'gender': gender,
+               'disease_type': disease_type,
+               'blood_type': blood_type,
+               'marital_status': marital_status,
+               'nationality': nationality,
+               'address': address,
+               'phone': phone
               
 
 
