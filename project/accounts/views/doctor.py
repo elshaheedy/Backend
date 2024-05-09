@@ -27,7 +27,7 @@ class DoctorViewSet(viewsets.ModelViewSet):
         rest_filters.SearchFilter,
         rest_filters.OrderingFilter,
     ]
-    filterset_class =  PatientFilter
+    filterset_class =  DoctorFilter
 
 
     def create(self , request, *args, **kwargs):
