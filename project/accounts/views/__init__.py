@@ -1,4 +1,4 @@
 from .employee import *
-from .permissions import *
+from .user import *
 from .patient import *
 from .doctor import *
