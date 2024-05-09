@@ -179,7 +179,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),  # Adjust based on requirements
 }
 
-ATOMIC_REQUESTS = True
+# ATOMIC_REQUESTS = True
 
 INTERNAL_IPS = [
     # ...
