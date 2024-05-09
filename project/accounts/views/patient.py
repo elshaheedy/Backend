@@ -42,7 +42,7 @@ class PatientViewSet(viewsets.ModelViewSet):
         msg,user=create_user(request.data)
         if msg!="created":
             return Response(msg,status=status.HTTP_400_BAD_REQUEST)
-
+      
         request.data.update({'user':user.id})
         
         return super().create(request, *args, **kwargs) 

@@ -40,3 +40,28 @@ class PermissionTest(TestSetup):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.data['user_permissions']), 2)
+
+
+class CheckTest(TestSetup):
+    def setUp(self) -> None:
+        super().setUp()
+        self.staff,self.staff_token=self.create_staff(username="12345678901230")
+        self.patient,self.patient_token=self.create_patient(self.staff_token,national_id="1234567890123",email="test@test.com")
+    def test_check_national_id(self):
+        url = reverse('check_national_id')
+        data = {
+            'national_id': '1234567890123'
+        }
+        response = self.client.post(
+            url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['exists'],True)
+    def test_check_email(self):
+        url = reverse('check_email')
+        data = {
+            'email': 'test@test.com'
+        }
+        response = self.client.post(
+            url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['exists'],True)
