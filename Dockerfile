@@ -13,8 +13,8 @@ COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+RUN python project/manage.py makemigrations
+RUN python project/manage.py migrate
 
 EXPOSE 8000
 
