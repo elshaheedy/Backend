@@ -1,2 +1,5 @@
-from .serializers import *
 from .permissions import *
+from .patient import *
+from .doctor import *
+from .patient import *
+from .employee import *

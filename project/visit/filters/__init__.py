@@ -18,19 +18,19 @@ class VisitFilter(filters.FilterSet):
             'created_at': ['year', 'month', 'day']
             
         }
-class MeasurementFilter(filters.FilterSet):
-    class Meta:
-        model = Measurement
-        fields = {
-            'visit': ['exact'],
-            'height': ['exact'],
-            'weight': ['exact'],
-            'blood_pressure': ['exact'],
-            'temperature': ['exact'],
-            'pulse': ['exact'],
-            'oxygen_level': ['exact'],
-            'created_at': ['year', 'month', 'day']
-        }
+# class MeasurementFilter(filters.FilterSet):
+#     class Meta:
+#         model = Measurement
+#         fields = {
+#             'visit': ['exact'],
+#             'height': ['exact'],
+#             'weight': ['exact'],
+#             'blood_pressure': ['exact'],
+#             'temperature': ['exact'],
+#             'pulse': ['exact'],
+#             'oxygen_level': ['exact'],
+#             'created_at': ['year', 'month', 'day']
+#         }
 class AttachmentFilter(filters.FilterSet):
     class Meta:
         model = Attachment

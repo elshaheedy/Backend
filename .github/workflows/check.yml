@@ -47,5 +47,7 @@ jobs:
       - name: Run tests
         run: |
            cd project
+           python manage.py makemigrations
+           python manage.py migrate
            python manage.py test --no-input
         # run: python project/manage.py test project --no-input
