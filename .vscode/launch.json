@@ -16,7 +16,10 @@
             ],
             "django": true,
             "autoStartBrowser": false,
-            "program": "${workspaceFolder}/project/manage.py"
+            "program": "${workspaceFolder}/project/manage.py",
+            "console": "integratedTerminal",
+            // show my code only false
+            // "justMyCode": false
         }
     ]
 }
