@@ -3,17 +3,23 @@
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
-class StaffPermission(BasePermission):
-   
 
+class CustomPermission(BasePermission):
     def has_permission(self, request, view):
-        return   request.user.is_staff
-     
-
-class OwnPermission(BasePermission):
-
-    def has_permission(self, request, view):
-        if   request.user.is_staff:
+        # Check if the user is an admin
+        if request.user and request.user.is_superuser:
             return True
-        if view.action == 'retrieve':
-            return request.user.is_authenticated and request.user == view.get_object().user
+        
+        if request.method in SAFE_METHODS:
+            return True
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        if request.user and request.user.is_superuser:
+            return True
+
+        if request.method in SAFE_METHODS:
+            return True
+        return False
+
+            

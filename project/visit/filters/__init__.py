@@ -35,6 +35,8 @@ class AttachmentFilter(filters.FilterSet):
     class Meta:
         model = Attachment
         fields = {
+            'user': ['exact'],
+            'visit__patient': ['exact'],
             'visit': ['exact'],
             'kind': ['exact'],
             'created_at': ['year', 'month', 'day']
