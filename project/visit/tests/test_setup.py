@@ -38,7 +38,7 @@ class TestSetup(TestCase):
         return user
 
     def create_patient(self, staff_token,
-                       national_id='01234567890123',
+                       national_id='012345678980123',
                        marital_status='test',
                        nationality='test',
                        full_name='test',
@@ -93,7 +93,7 @@ class TestSetup(TestCase):
         return response.data
     def create_doctor(self, staff_token,
                      full_name='test',
-                     national_id='01234567890123',
+                     national_id='012345678901823',
                      speciality='test',
                      license_number='test',
                      experience_years=2,

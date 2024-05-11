@@ -239,6 +239,12 @@ class PatientWithImageTest(TestSetup):
             url, obj, HTTP_AUTHORIZATION='Bearer ' + self.staff_token )
 
         self.assertEqual(response.status_code, 201)
+
+        response = self.client.get(
+            '/accounts/user-image/?user_id='+str(user.id), format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+
         # remvove image
         os.remove("test_image.jpg")
 

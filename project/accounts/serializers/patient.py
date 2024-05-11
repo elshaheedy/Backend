@@ -23,7 +23,7 @@ class AddressSerializer(serializers.Serializer):
 
 class PatientSerializer(serializers.ModelSerializer):
 
-    image = UserImageSerializer(many=True, read_only=True, source='user.images')
+    image = UserImageSerializer( read_only=True, source='user.image')
     address =AddressSerializer( required=False)
     phone=PhoneSerializer(PhoneSerializer,required=False)
     class Meta:

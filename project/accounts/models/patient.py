@@ -2,7 +2,7 @@ from .models      import *
 class UserImage(models.Model):
     image = models.ImageField(upload_to='user_images' )
     # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_images' )
-    user = models.ForeignKey(User, on_delete=models.CASCADE ,related_name='images' )
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='image' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)

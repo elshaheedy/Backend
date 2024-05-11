@@ -12,13 +12,6 @@ from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
 
-class UserImageViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for handling UserImage model.
-    """
-    queryset = UserImage.objects.all()
-    serializer_class = UserImageSerializer
-    permission_classes = [OwnPermission]
 
 
 class PatientViewSet(viewsets.ModelViewSet):
@@ -39,11 +32,15 @@ class PatientViewSet(viewsets.ModelViewSet):
 
 
     def create(self , request, *args, **kwargs):
-        msg,user=create_user(request.data)
-        if msg!="created":
-            return Response(msg,status=status.HTTP_400_BAD_REQUEST)
-      
-        request.data.update({'user':user.id})
+
+        serializer = PatientSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        patient=serializer.save()
+
+        user=User.objects.create_user(username=serializer.data['national_id'],password=serializer.data['national_id'])
+        patient.user=user
+        patient.save()
         
-        return super().create(request, *args, **kwargs) 
+        
+        return Response(PatientSerializer(patient).data, status=status.HTTP_201_CREATED)
  
