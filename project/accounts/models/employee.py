@@ -1,4 +1,5 @@
 from .models      import *
 class Employee(Profile):
+
     def __str__(self):
-        return self.first_name
+        return self.national_id
