@@ -28,7 +28,7 @@ class TestSetup(TestCase):
 
     def create_staff(self, username='stafftest', password='test123'):
         user = User.objects.create_user(username=username, password=password)
-        user.is_staff = True
+        user.is_superuser = True
         user.save()
         token = self.get_token('stafftest', 'test123')
         return user, token

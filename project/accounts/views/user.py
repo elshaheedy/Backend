@@ -15,7 +15,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet 
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
-from accounts.permissions import OwnPermission
+from accounts.permissions import *
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 class UserImageViewSet(viewsets.ModelViewSet):
@@ -24,13 +24,19 @@ class UserImageViewSet(viewsets.ModelViewSet):
     """
     queryset = UserImage.objects.all()
     serializer_class = UserImageSerializer
-    permission_classes = [OwnPermission]
 
     filter_backends = [
         DjangoFilterBackend,
         
     ]
     filterset_class =  UserImageFilter
+    permission_classes = [CustomPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return UserImage.objects.all()
+        else:
+            return UserImage.objects.filter(user=self.request.user)
 
 
 
@@ -52,7 +58,12 @@ class PermissionViewSet(viewsets.ModelViewSet):
 class UserDetails(GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [CustomPermission]
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.all()
+        else:
+            return User.objects.filter(id=self.request.user.id)
 
 
 

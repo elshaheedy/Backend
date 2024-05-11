@@ -5,12 +5,11 @@ from accounts.serializers import DoctorSerializer
 from accounts.services import *
 from rest_framework.response import Response
 from rest_framework import status
-from accounts.permissions import  OwnPermission
+from accounts.permissions import  *
 from django_filters import rest_framework as filters
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
-
 
 class DoctorViewSet(viewsets.ModelViewSet):
     """
@@ -18,7 +17,6 @@ class DoctorViewSet(viewsets.ModelViewSet):
     """
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
-    permission_classes = [OwnPermission]
 
 
     
@@ -29,6 +27,13 @@ class DoctorViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  DoctorFilter
 
+    permission_classes = [CustomPermission]
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Doctor.objects.all()
+        else:
+            return Doctor.objects.filter(user=self.request.user)
+    
 
     def create(self , request, *args, **kwargs):
         serializer = DoctorSerializer(data=request.data)

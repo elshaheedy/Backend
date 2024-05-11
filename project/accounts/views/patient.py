@@ -23,7 +23,6 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
 
     serializer_class = PatientSerializer
-    permission_classes = [CustomPermission]
     
     filter_backends = [
         DjangoFilterBackend,
@@ -32,6 +31,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  PatientFilter
 
+    permission_classes = [CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Patient.objects.all()
