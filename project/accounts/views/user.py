@@ -15,6 +15,26 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet 
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
+from accounts.permissions import OwnPermission
+from accounts.filters         import *
+from django_filters.rest_framework import DjangoFilterBackend
+class UserImageViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for handling UserImage model.
+    """
+    queryset = UserImage.objects.all()
+    serializer_class = UserImageSerializer
+    permission_classes = [OwnPermission]
+
+    filter_backends = [
+        DjangoFilterBackend,
+        
+    ]
+    filterset_class =  UserImageFilter
+
+
+
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
