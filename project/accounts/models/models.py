@@ -17,7 +17,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=255, null=True,blank=True)
     marital_status = models.CharField(max_length=255 ,null=True,blank=True)
     nationality = models.CharField(max_length=255 ,default="Egypt")
-    national_id= models.CharField(max_length=255)
+    national_id= models.CharField(max_length=255 ,unique=True)
     date_of_birth = models.DateField(blank=True, null=True)
     notes= models.TextField(blank=True,null=True)
     address = models.JSONField(null=True, blank=True)

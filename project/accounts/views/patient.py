@@ -39,11 +39,15 @@ class PatientViewSet(viewsets.ModelViewSet):
 
 
     def create(self , request, *args, **kwargs):
-        msg,user=create_user(request.data)
-        if msg!="created":
-            return Response(msg,status=status.HTTP_400_BAD_REQUEST)
-      
-        request.data.update({'user':user.id})
+
+        serializer = PatientSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        patient=serializer.save()
         
-        return super().create(request, *args, **kwargs) 
+        user=User.objects.create_user(username=serializer.data['national_id'],password=serializer.data['national_id'])
+        patient.user=user
+        patient.save()
+        
+        
+        return Response(PatientSerializer(patient).data, status=status.HTTP_201_CREATED)
  
