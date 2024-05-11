@@ -11,7 +11,13 @@ from accounts.serializers import *
 
 from rest_framework import viewsets
 from accounts.permissions import  * 
-
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Prefetch
+from django_filters import rest_framework as filters
+from accounts.filters         import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters as rest_filters
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -20,7 +26,21 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     """
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    permission_classes = [OwnPermission]
+
+    filter_backends = [
+        DjangoFilterBackend,
+        rest_filters.SearchFilter,
+        rest_filters.OrderingFilter,
+    ]
+    filterset_class =  EmployeeFilter
+
+    permission_classes = [CustomPermission]
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Employee.objects.all()
+        else:
+               return Employee.objects.filter(user=self.request.user)
+         
     def create(self , request, *args, **kwargs):
         serializer = EmployeeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

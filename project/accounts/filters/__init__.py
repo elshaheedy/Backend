@@ -46,3 +46,13 @@ class DoctorFilter(filters.FilterSet):
             'work_days': ['exact'],
             'license_number': ['exact'],
         }
+
+class EmployeeFilter(filters.FilterSet):
+    class Meta:
+        model = Employee
+        fields = {
+            'user': ['exact'],
+            'national_id': ['exact'],
+            'full_name': ['exact'],
+            'created_at': ['year', 'month', 'day'],
+        }

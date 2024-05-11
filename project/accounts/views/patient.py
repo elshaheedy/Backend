@@ -5,12 +5,14 @@ from accounts.serializers import *
 from accounts.services import *
 from rest_framework.response import Response
 from rest_framework import status
-from accounts.permissions import  OwnPermission
+from accounts.permissions import  *
 from django.db.models import Prefetch
 from django_filters import rest_framework as filters
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
+
+from visit.models.models import Visit
 
 
 
@@ -21,7 +23,6 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
 
     serializer_class = PatientSerializer
-    permission_classes = [OwnPermission]
     
     filter_backends = [
         DjangoFilterBackend,
@@ -30,7 +31,18 @@ class PatientViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  PatientFilter
 
-
+    permission_classes = [CustomPermission]
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Patient.objects.all()
+        else:
+            doctor=Doctor.objects.filter(user=self.request.user).first()
+            if doctor:
+                patients=Visit.objects.filter(doctors__in=[doctor]).values('patient').distinct()
+                return Patient.objects.filter(id__in=patients)
+            
+            return Patient.objects.filter(user=self.request.user)
+        
     def create(self , request, *args, **kwargs):
 
         serializer = PatientSerializer(data=request.data)

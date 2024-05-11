@@ -11,24 +11,26 @@ from django_filters import rest_framework as filters
 from .filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
-
+from accounts.permissions import *
 class AttachmentViewSet(viewsets.ModelViewSet):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
     pagination_class = CustomPagination
 
-    # def get_queryset(self):
-    #     if self.request.user.is_superuser:
-    #         return Attachment.objects.all()
-    #     else:
-    #         return Attachment.objects.filter(user=self.request.user)
+   
     filter_backends = [
         DjangoFilterBackend,
         rest_filters.SearchFilter,
         rest_filters.OrderingFilter,
     ]
     filterset_class =  AttachmentFilter
-   
+
+    permission_classes=[CustomPermission]
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Attachment.objects.all()
+        else:
+            return Attachment.objects.filter(user=self.request.user)
 
 
 
@@ -36,13 +38,19 @@ class VisitViewSet(viewsets.ModelViewSet):
     queryset = Visit.objects.all()
     serializer_class = VisitSerializer
     pagination_class=CustomPagination
-    permission_classes=[VisitPermission]
     filter_backends = [
         DjangoFilterBackend,
         rest_filters.SearchFilter,
         rest_filters.OrderingFilter,
     ]
     filterset_class =  VisitFilter
+    permission_classes=[CustomPermission]
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Visit.objects.all()
+        else:
+            return Visit.objects.filter(user=self.request.user)
     
 
 
