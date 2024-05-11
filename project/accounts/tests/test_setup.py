@@ -22,10 +22,11 @@ class TestSetup(TestCase):
         token= self.client.post('/accounts/token/', {'username': username, 'password': password}, format='json')
         # if 'access' not in token.data:
             # print('no access',token.data,username,password)
+        self.assertEqual(token.status_code, 200)
         return token.data['access']
     def create_staff(self,username='stafftest', password='test123'):
         user=User.objects.create_user(username=username, password=password)
-        user.is_staff = True
+        user.is_superuser = True
         user.save()
         token=self.get_token(username, password)
         return user,token

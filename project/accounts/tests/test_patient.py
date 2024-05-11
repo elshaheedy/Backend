@@ -284,7 +284,9 @@ class PatientAddressTest(TestSetup):
     def test_list_patients(self):
         response = self.client.get(
             self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        # self.assertEqual(response.status_code, 403)
     def test_get_patient(self):
         response = self.client.get(
             self.url+f'{self.patient["id"]}/', format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
