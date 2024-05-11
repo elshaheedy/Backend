@@ -21,7 +21,16 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [OwnPermission]
-   
+    def create(self , request, *args, **kwargs):
+        serializer = EmployeeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        employee=serializer.save()
+        
+        user=User.objects.create_user(username=serializer.data['national_id'],password=serializer.data['national_id'])
+        employee.user=user
+        employee.save()
+        
+        return Response(EmployeeSerializer(employee).data, status=status.HTTP_201_CREATED)
 
 
     

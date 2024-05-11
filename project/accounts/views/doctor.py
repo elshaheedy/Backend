@@ -31,11 +31,13 @@ class DoctorViewSet(viewsets.ModelViewSet):
 
 
     def create(self , request, *args, **kwargs):
-        msg,user=create_user(request.data)
-        if msg!="created":
-            return Response(msg,status=status.HTTP_400_BAD_REQUEST)
-
-        request.data.update({'user':user.id})
+        serializer = DoctorSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        doctor=serializer.save()
         
-        return super().create(request, *args, **kwargs) 
+        user=User.objects.create_user(username=serializer.data['national_id'],password=serializer.data['national_id'])
+        doctor.user=user
+        doctor.save()
+        
+        return Response(DoctorSerializer(doctor).data, status=status.HTTP_201_CREATED)
  

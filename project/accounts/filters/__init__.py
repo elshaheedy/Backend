@@ -21,6 +21,17 @@ class  PatientFilter(filters.FilterSet):
        
 
         }
+
+class UserImageFilter(filters.FilterSet):
+    class Meta:
+        model = UserImage
+        fields = {
+            'user_id': ['exact'],
+        }
+
+
+
+
 class DoctorFilter(filters.FilterSet):
     class Meta:
         model = Doctor
