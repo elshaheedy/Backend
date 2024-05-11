@@ -22,6 +22,7 @@ class MeasurementSerializer(serializers.Serializer):
     oxygen_level = serializers.CharField(max_length=255 ,required=False)
     
 class AttachmentSerializer(serializers.ModelSerializer):
+    file_type=serializers.CharField(read_only=True)
     class Meta:
         model = Attachment
         # fields = '__all__'
@@ -29,7 +30,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
 class VisitSerializer(serializers.ModelSerializer):
     measurement = MeasurementSerializer( required=False)
-    attachment = AttachmentSerializer( read_only=True, many=True,source='attachments')
+    attachment = AttachmentSerializer( read_only=True, many=True,source='visit_attachments', required=False)
     class Meta:
         model = Visit
         # fields = '__all__'

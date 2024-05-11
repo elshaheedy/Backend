@@ -16,7 +16,12 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
     pagination_class = CustomPagination
-    permission_classes=[RelatedVisitPermission]
+
+    # def get_queryset(self):
+    #     if self.request.user.is_superuser:
+    #         return Attachment.objects.all()
+    #     else:
+    #         return Attachment.objects.filter(user=self.request.user)
     filter_backends = [
         DjangoFilterBackend,
         rest_filters.SearchFilter,
