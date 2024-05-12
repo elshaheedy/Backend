@@ -11,7 +11,10 @@ class VisitFilter(filters.FilterSet):
         model = Visit
         fields = {
             'ticket': ['exact'],
-            'datatime': ['year', 'month', 'day'],
+            'status': ['exact'],
+            'start_at': ['year', 'month', 'day'],
+            'end_at': ['year', 'month', 'day'],
+            # 'datatime': ['year', 'month', 'day'],
             'doctors': ['exact'],
             'patient': ['exact'],
             'is_deleted': ['exact'],

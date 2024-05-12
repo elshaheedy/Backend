@@ -15,7 +15,7 @@ class VisitFactory(factory.Factory):
     ticket = factory.Faker("word")
     patient = factory.SubFactory("accounts.factories.PatientFactory")
     # doctors = factory.SubFactory("accounts.factories.DoctorFactory")
-    # measurement = factory.SubFactory("visit.factories.MedicalRecordFactory")
+    measurement = factory.SubFactory("visit.factories.MedicalRecordFactory")
 class AttachmentFactory(factory.Factory):
     class Meta:
         model = Visit
