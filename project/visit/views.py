@@ -25,7 +25,7 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  AttachmentFilter
 
-    permission_classes=[CustomPermission]
+    permission_classes=[IsAuthenticated,CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Attachment.objects.all()
@@ -47,7 +47,7 @@ class VisitViewSet(viewsets.ModelViewSet):
         rest_filters.OrderingFilter,
     ]
     filterset_class =  VisitFilter
-    permission_classes=[CustomPermission]
+    permission_classes=[IsAuthenticated,CustomPermission]
 
     def get_queryset(self):
         if self.request.user.is_superuser:

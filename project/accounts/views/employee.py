@@ -18,6 +18,7 @@ from django_filters import rest_framework as filters
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
+from rest_framework.permissions import IsAuthenticated
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -34,7 +35,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  EmployeeFilter
 
-    permission_classes = [CustomPermission]
+    permission_classes = [IsAuthenticated,CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Employee.objects.all()

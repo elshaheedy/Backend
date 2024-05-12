@@ -18,6 +18,8 @@ from rest_framework.generics import GenericAPIView
 from accounts.permissions import *
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+
 class UserImageViewSet(viewsets.ModelViewSet):
     """
     ViewSet for handling UserImage model.
@@ -30,7 +32,7 @@ class UserImageViewSet(viewsets.ModelViewSet):
         
     ]
     filterset_class =  UserImageFilter
-    permission_classes = [CustomPermission]
+    permission_classes = [IsAuthenticated,CustomPermission]
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -58,7 +60,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
 class UserDetails(GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [CustomPermission]
+    permission_classes =  [IsAuthenticated,CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return User.objects.all()
