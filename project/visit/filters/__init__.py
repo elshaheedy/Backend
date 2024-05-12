@@ -12,13 +12,12 @@ class VisitFilter(filters.FilterSet):
         fields = {
             'ticket': ['exact'],
             'status': ['exact'],
-            'start_at': ['year', 'month', 'day'],
-            'end_at': ['year', 'month', 'day'],
-            # 'datatime': ['year', 'month', 'day'],
+            'start_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
+            'end_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             'doctors': ['exact'],
             'patient': ['exact'],
             'is_deleted': ['exact'],
-            'created_at': ['year', 'month', 'day']
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             
         }
 # class MeasurementFilter(filters.FilterSet):
@@ -41,8 +40,8 @@ class AttachmentFilter(filters.FilterSet):
             'user': ['exact'],
             'visit__patient': ['exact'],
             'visit': ['exact'],
-            'kind': ['exact'],
-            'created_at': ['year', 'month', 'day']
+            'kind': ['exact', 'icontains', 'istartswith'],
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
         }
 
 
