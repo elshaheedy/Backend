@@ -28,11 +28,16 @@ class Command(BaseCommand):
             len(Patient.objects.all()),
             patient=factory.Iterator(cycle(Patients)),
             
-            # doctors=factory.Iterator(cycle(doctors)),
+            # doctors=[factory.Iterator(cycle(doctors))],
         )
             # doctors=[factory.Iterator(cycle(doctors)) for i in range(2)],
 
         for visit in visits:
+            visit.save()
+            random_num=random.randint(1,3)
+            for _ in range(random_num):
+                random_index=random.randint(0, len(doctors)-1)
+                visit.doctors.add(doctors[random_index])
             visit.save()
         self.stdout.write(
             self.style.SUCCESS(

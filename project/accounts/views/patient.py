@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
 
 from visit.models.models import Visit
-
+from accounts.pagination import CustomPagination
 
 
 class PatientViewSet(viewsets.ModelViewSet):
@@ -23,7 +23,8 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
 
     serializer_class = PatientSerializer
-    
+    pagination_class = CustomPagination
+
     filter_backends = [
         DjangoFilterBackend,
         rest_filters.SearchFilter,

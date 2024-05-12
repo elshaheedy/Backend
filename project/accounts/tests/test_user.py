@@ -1,46 +1,7 @@
-# from accounts.tests.test_setup import *
-# from accounts.models import *
-# from django.urls import reverse
-# class PermissionTest(TestSetup):
-#     def setUp(self) -> None:
-#         super().setUp()
-#         self.url = '/accounts/permission/'
-#         self.staff, self.staff_token = self.create_staff()
-#         self.patient, self.patient_token = self.create_patient(
-#             self.staff_token)
-#     def test_list_permission_superuser(self):
-#         response = self.client.get(
-#             self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-#         self.assertEqual(response.status_code, 200)
-#     def test_list_permission_patient(self):
-#         response = self.client.get(
-#             self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
-#         self.assertEqual(response.status_code, 403)
-    
-#     def  test_assign_permissions_to_user(self):
-#         permissions = self.client.get(
-#             self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token).data
-       
-#         # url=reverse('assign-permissions-to-user')
-#         user = User.objects.create_user(username='testpermission', password='test123')
-#         # url=reverse('user-details', args=[user.id])
-#         url = reverse('user-details-detail', kwargs={'pk': user.id})
-
-#         permission_ids = [permission['id'] for permission in permissions]
-#         data = {
-#              'user_permissions' : [ permission_ids[0], permission_ids[1] ]
-#         }
-#         response = self.client.patch(
-#             url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-#         self.assertEqual(response.status_code, 200)
-
-#         response = self.client.get(
-#             url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
-#         # print(response.data)
-#         self.assertEqual(response.status_code, 200)
-
-#         self.assertEqual(len(response.data['user_permissions']), 2)
-
+from accounts.tests.test_setup import *
+from accounts.models import *
+from django.urls import reverse
+from rest_framework import status
 
 # class CheckTest(TestSetup):
 #     def setUp(self) -> None:
@@ -65,3 +26,51 @@
 #             url, data, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
 #         self.assertEqual(response.status_code, 200)
 #         self.assertEqual(response.data['exists'],True)
+
+
+class ChangePasswordTest(TestSetup):
+    def setUp(self) -> None:
+        super().setUp()
+        self.staff,self.staff_token=self.create_staff()
+        self.patient,self.patient_token=self.create_patient(self.staff_token,national_id="12345678901239")
+        self.url=reverse('change-password')
+
+    def test_change_password(self):
+        
+        data = {
+            'user_id': self.patient['user'],
+            'new_password': 'newpassword123'
+        }
+        response = self.client.post(self.url, data,HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+     
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        user=User.objects.get(id=self.patient['user'])
+        self.assertTrue(user.check_password('newpassword123'))
+
+    def test_invalid_user_id(self):
+        data = {
+            'user_id': 9999,
+            'new_password': 'newpassword123'
+          
+        }
+        response = self.client.post(self.url, data,HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+     
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_missing_password(self):
+        data = {
+            'user_id': self.patient['user'],
+            # Missing new_password
+        }
+        response = self.client.post(self.url, data, format='json',HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['new_password'][0], 'This field is required.')
+
+    def test_unauthorized(self):
+      
+        data = {
+            'user_id': self.patient['user'],
+            'new_password': 'newpassword123'
+        }
+        response = self.client.post(self.url, data,HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

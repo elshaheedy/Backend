@@ -16,6 +16,7 @@ router.register('user-image', UserImageViewSet)
 router.register('group', GroupViewSet)
 router.register('permission', PermissionViewSet)
 router.register('user-details', UserDetails, basename='user-details')
+# router.register('change-password', ChangePasswordView, basename='change-password')
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('check-national-id/', CheckNationalIdView.as_view(), name='check_national_id'),
     path('check-email/',CheckEmailView().as_view(), name='check_email'),
-   
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+
 ]
