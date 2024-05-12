@@ -45,7 +45,7 @@ class VisitTestCase(TestSetup):
         self.assertEqual(visit1['start_at'] > visit2['start_at'], False)
 
     def test_get_visit_start_at_gte(self):
-        url='/visit/visit/?start_at_gte=2020-01-02'
+        url='/visit/visit/?start_at__gte=2020-01-02'
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 1)
