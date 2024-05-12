@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import *
-
+from .user import *
 
 class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,23 +9,13 @@ class UserImageSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['is_deleted']
 
-class PhoneSerializer(serializers.Serializer):
-    mobile=serializers.CharField(required=False)
 
-    
-class AddressSerializer(serializers.Serializer):
-
-    street = serializers.CharField(required=False)
-    city = serializers.CharField(required=False)
-    governorate = serializers.CharField(required=False)
-    class Meta:
-        fields = ['governorate', 'city', 'street']
 
 class PatientSerializer(serializers.ModelSerializer):
 
     image = UserImageSerializer( read_only=True, source='user.image')
     address =AddressSerializer( required=False)
-    phone=PhoneSerializer(PhoneSerializer,required=False)
+    phone=PhoneSerializer(required=False)
     class Meta:
         model = Patient
 

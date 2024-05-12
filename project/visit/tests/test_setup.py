@@ -82,11 +82,13 @@ class TestSetup(TestCase):
     def create_visit(self, staff_token,
                      patient,
                      ticket='test',
-                     
-                     ):
+                     start_at='2020-01-01',
+                     end_at='2020-01-01',):
         data = {
             'ticket': ticket,
-            'patient': patient
+            'patient': patient,
+            'start_at': start_at,
+            'end_at': end_at
         }
 
         response = self.client.post(
