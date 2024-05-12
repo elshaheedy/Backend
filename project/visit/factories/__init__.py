@@ -1,6 +1,6 @@
 import factory
 from visit.models import Visit
-
+from .providors import *
 class MedicalRecordFactory(factory.Factory):
     blood_pressure = factory.Faker("word")  
     oxygen_level = factory.Faker("word")
@@ -14,8 +14,11 @@ class VisitFactory(factory.Factory):
         exclude = ['is_deleted']
     ticket = factory.Faker("word")
     patient = factory.SubFactory("accounts.factories.PatientFactory")
+    status = factory.Faker("random_element", elements=["pending", "done", "canceled"])
+    start_at = factory.Faker("date")
+    end_at = factory.Faker("date")
     # doctors = factory.SubFactory("accounts.factories.DoctorFactory")
-    measurement = factory.SubFactory("visit.factories.MedicalRecordFactory")
+    measurement = factory.Faker("medical_record")
 class AttachmentFactory(factory.Factory):
     class Meta:
         model = Visit

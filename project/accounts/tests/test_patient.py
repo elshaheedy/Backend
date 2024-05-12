@@ -158,7 +158,7 @@ class PatientAddressTest(TestSetup):
         self.url = '/accounts/patient/'
         self.staff, self.staff_token = self.create_staff()
         self.patient, self.patient_token = self.create_patient(
-            self.staff_token)
+            self.staff_token, national_id="1012345678901234")
 
     def test_create_patient(self):
         data = {
@@ -186,7 +186,7 @@ class PatientAddressTest(TestSetup):
         response = self.client.get(
             self.url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.patient_token)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
         # self.assertEqual(response.status_code, 403)
     def test_get_patient(self):
         response = self.client.get(
@@ -249,10 +249,7 @@ class PatientPhonesTest(TestSetup):
     def test_update_patient(self):
 
         url =f'/accounts/patient/{self.patient["id"]}/'
-        data = {
-
-
-      
+        data = { 
                 'id': self.patient['id'],
                 'marital_status': 'test',
                 'nationality': 'test',

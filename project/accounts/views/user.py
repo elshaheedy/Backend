@@ -19,7 +19,9 @@ from accounts.permissions import *
 from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
-
+from accounts.serializers.user import ChangePasswordSerializer
+from rest_framework.generics import GenericAPIView,CreateAPIView
+from accounts.pagination import CustomPagination
 class UserImageViewSet(viewsets.ModelViewSet):
     """
     ViewSet for handling UserImage model.
@@ -61,6 +63,8 @@ class UserDetails(GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelM
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes =  [IsAuthenticated,CustomPermission]
+    pagination_class = CustomPagination
+
     def get_queryset(self):
         if self.request.user.is_superuser:
             return User.objects.all()
@@ -146,3 +150,14 @@ class CheckEmailView(GenericAPIView):
             return Response({'exists':True} ,status=status.HTTP_200_OK)
         return Response({'exists':False} ,status=status.HTTP_200_OK)
 
+
+
+class ChangePasswordView(GenericAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = ChangePasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)

@@ -11,13 +11,15 @@ from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
 
+from accounts.pagination import CustomPagination
+
 class DoctorViewSet(viewsets.ModelViewSet):
     """
     ViewSet for handling Doctor model.
     """
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
-
+    pagination_class = CustomPagination
 
     
     filter_backends = [

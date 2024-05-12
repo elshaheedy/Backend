@@ -19,7 +19,7 @@ from accounts.filters         import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters as rest_filters
 from rest_framework.permissions import IsAuthenticated
-
+from accounts.pagination import CustomPagination
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     """
@@ -27,6 +27,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     """
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    pagination_class = CustomPagination
 
     filter_backends = [
         DjangoFilterBackend,
