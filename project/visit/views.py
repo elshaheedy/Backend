@@ -53,12 +53,12 @@ class VisitViewSet(viewsets.ModelViewSet):
         if self.request.user.is_superuser:
             return Visit.objects.all()
         else:
-            doctor=Doctor.objects.filter(user=self.request.user).first()
+            doctor=Doctor.objects.filter(user=self.request.user).first().order_by('id')
             if doctor:
      
-                return Visit.objects.filter(doctors__in=[doctor])
+                return Visit.objects.filter(doctors__in=[doctor]).order_by('id')
             
-            return Visit.objects.filter(patient__user=self.request.user)
+            return Visit.objects.filter(patient__user=self.request.user).order_by('id')
 
 
 class Statistics(GenericViewSet):

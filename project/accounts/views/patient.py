@@ -39,10 +39,10 @@ class PatientViewSet(viewsets.ModelViewSet):
         else:
             doctor=Doctor.objects.filter(user=self.request.user).first()
             if doctor:
-                patients=Visit.objects.filter(doctors__in=[doctor]).values('patient').distinct()
-                return Patient.objects.filter(id__in=patients)
+                patients=Visit.objects.filter(doctors__in=[doctor]).values('patient').distinct().order_by('id')
+                return Patient.objects.filter(id__in=patients).order_by('id')
             
-            return Patient.objects.filter(user=self.request.user)
+            return Patient.objects.filter(user=self.request.user).order_by('id')
         
     def create(self , request, *args, **kwargs):
 
