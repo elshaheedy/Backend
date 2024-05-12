@@ -30,7 +30,10 @@ class AttachmentViewSet(viewsets.ModelViewSet):
         if self.request.user.is_superuser:
             return Attachment.objects.all()
         else:
-            return Attachment.objects.filter(user=self.request.user)
+            doctor=Doctor.objects.filter(user=self.request.user).first()
+            if doctor:
+                return Attachment.objects.filter(visit__doctors__in=[doctor])
+            return Attachment.objects.filter(visit__patient__user=self.request.user)
 
 
 
@@ -50,8 +53,12 @@ class VisitViewSet(viewsets.ModelViewSet):
         if self.request.user.is_superuser:
             return Visit.objects.all()
         else:
-            return Visit.objects.filter(user=self.request.user)
-    
+            doctor=Doctor.objects.filter(user=self.request.user).first()
+            if doctor:
+     
+                return Visit.objects.filter(doctors__in=[doctor])
+            
+            return Visit.objects.filter(patient__user=self.request.user)
 
 
 class Statistics(GenericViewSet):

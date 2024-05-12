@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create and save sample data for Category
 
-        users_count = max(6-len(Doctor.objects.all()), 0)
+        users_count = max(8-len(Doctor.objects.all()), 0)
         users = UserFactory.create_batch(
             users_count,
         )
