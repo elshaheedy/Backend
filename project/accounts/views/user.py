@@ -65,6 +65,8 @@ class UserDetails(GenericViewSet, mixins.RetrieveModelMixin, mixins.UpdateModelM
     permission_classes =  [IsAuthenticated,CustomPermission]
     pagination_class = CustomPagination
 
+
+
     def get_queryset(self):
         if self.request.user.is_superuser:
             return User.objects.all()
@@ -100,12 +102,19 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             Response: An HTTP response containing token pairs along with user data if available.
         """
         response= super().post(request, *args, **kwargs)
-        try:
-            response.data['user']= UserSerializer(User.objects.get(username=request.data['username'])).data
-        except:
-            pass
-
+        uesr = User.objects.get(username=request.data['username'])
+        response.data['user']= UserSerializer(uesr).data
+        doctor=Doctor.objects.filter(user=uesr).first()
+        if doctor:
+            response.data['doctor']= DoctorSerializer(doctor).data
+        patient=Patient.objects.filter(user=uesr).first()
+        if patient:
+            response.data['patient']= PatientSerializer(patient).data
+        employee=Employee.objects.filter(user=uesr).first()
+        if employee:
+            response.data['employee']= EmployeeSerializer(employee).data
         return response
+    
 
 class CheckNationalIdView(GenericAPIView):
     serializer_class =CheckNationalSerializer
@@ -153,11 +162,21 @@ class CheckEmailView(GenericAPIView):
 
 
 class ChangePasswordView(GenericAPIView):
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     serializer_class = ChangePasswordSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
+       
+        if request.user.is_superuser or request.user.is_staff:
+            pass 
+        else:
+            doctor=Doctor.objects.filter(user=request.user).first() 
+            if doctor and request.user==serializer.validated_data['user_id']:
+                pass
+            else:
+                return Response({"message": "You are not authorized to change password."}, status=status.HTTP_403_FORBIDDEN)
+
         serializer.save()
         return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)
