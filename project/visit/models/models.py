@@ -3,14 +3,18 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your models here.
 class Visit(models.Model):
-    id = models.AutoField(primary_key=True)
+
+
+
+    status = models.CharField(max_length=255, null=True, blank=True,
+                               choices=[('pending', 'Pending'),('done', 'Done'),('canceled', 'Canceled')])
+
     visit_number = models.IntegerField(null=True)
     ticket = models.CharField(max_length=255)
     doctors = models.ManyToManyField('accounts.Doctor',null=True ,blank=True , related_name='visits')
     measurement=models.JSONField(null=True,blank=True)
     start_at= models.DateTimeField(null=True)
     end_at = models.DateTimeField(null=True)
-    status = models.CharField(max_length=255, null=True, blank=True ,Choices=[('pending','pending'),('done','done'),('canceled','canceled')])
     patient = models.ForeignKey('accounts.Patient', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
