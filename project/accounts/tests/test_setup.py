@@ -132,13 +132,19 @@ class TestSetup(TestCase):
 
                 staff_token,
                 patient_id,
-                doctors_ids,
+                doctors_ids=[],
                 ticket='test',
+                start_at='2020-01-01',
+                end_at='2020-01-01',
+               
+
         ):
             data = {
                 'patient': patient_id,
                 'doctors': doctors_ids,
-                'ticket': ticket
+                'ticket': ticket,
+                'start_at': start_at,
+                'end_at': end_at
             }
 
             response = self.client.post(

@@ -7,17 +7,23 @@ from accounts.models import *
 
 
 class  PatientFilter(filters.FilterSet):
+    address__street = filters.CharFilter(lookup_expr='icontains', label='Street')
+
     class Meta:
         model = Patient
         fields = {
             'user': ['exact'],
-            'full_name': ['exact'],
-            'created_at': ['year', 'month', 'day'],
-            # 'code': ['exact'],
-            'nationality': ['exact'],
+            'full_name': ['exact', 'icontains', 'istartswith'],
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
+            'nationality': ['exact', 'icontains', 'istartswith'],
             'national_id': ['exact'],
-            'disease_type': ['exact'],
-            'blood_type': ['exact'],
+            'disease_type': ['exact', 'icontains', 'istartswith'],
+            'blood_type': ['exact', 'icontains', 'istartswith'],
+            # 'address__street': ['exact', 'icontains', 'istartswith'],
+            # 'address__city': ['exact', 'icontains', 'istartswith'],
+            # 'address__governorate': ['exact', 'icontains', 'istartswith'],
+            # 'phone__mobile': ['exact', 'icontains', 'istartswith'],
+
        
 
         }
@@ -27,6 +33,7 @@ class UserImageFilter(filters.FilterSet):
         model = UserImage
         fields = {
             'user_id': ['exact'],
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
         }
 
 
@@ -37,14 +44,14 @@ class DoctorFilter(filters.FilterSet):
         model = Doctor
         fields = {
             'user': ['exact'],
-            'speciality': ['exact'],
-            'nationality': ['exact'],
+            'speciality': ['exact', 'icontains', 'istartswith'],
+            'nationality': ['exact', 'icontains', 'istartswith'],
             'national_id': ['exact'],
-            'full_name': ['exact'],
-            'created_at': ['year', 'month', 'day'],
+            'full_name': ['exact', 'icontains', 'istartswith'],
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             'experience_years': ['exact'],
-            'work_days': ['exact'],
-            'license_number': ['exact'],
+            'work_days': ['exact', 'icontains', 'istartswith'],
+            'license_number': ['exact', 'icontains', 'istartswith'],
         }
 
 class EmployeeFilter(filters.FilterSet):
@@ -53,6 +60,6 @@ class EmployeeFilter(filters.FilterSet):
         fields = {
             'user': ['exact'],
             'national_id': ['exact'],
-            'full_name': ['exact'],
-            'created_at': ['year', 'month', 'day'],
+            'full_name': ['exact', 'icontains', 'istartswith'],
+            'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
         }
