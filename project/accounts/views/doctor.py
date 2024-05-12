@@ -27,7 +27,7 @@ class DoctorViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  DoctorFilter
 
-    permission_classes = [CustomPermission]
+    permission_classes = [IsAuthenticated,CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Doctor.objects.all()

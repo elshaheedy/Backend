@@ -31,7 +31,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     ]
     filterset_class =  PatientFilter
 
-    permission_classes = [CustomPermission]
+    permission_classes = [IsAuthenticated,CustomPermission]
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Patient.objects.all()
