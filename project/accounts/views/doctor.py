@@ -67,15 +67,7 @@ class DoctorViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return super().destroy(request, *args, **kwargs)
-    def restore(self, request, *args, **kwargs):
-        serializer = RestoreDoctorSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        instance = serializer.validated_data['id']
-        instance.undelete()
-        return Response(status=status.HTTP_200_OK)
-
+    
 
     def get_deleted(self, request, *args, **kwargs):
         paginator = self.pagination_class()
@@ -84,3 +76,17 @@ class DoctorViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
+
+from rest_framework.generics import GenericAPIView
+class RestoreDoctorView(GenericAPIView):
+    serializer_class = RestoreDoctorSerializer
+    permission_classes = [IsAuthenticated,CustomPermission]
+
+    def post(self, request, *args, **kwargs):
+        serializer = RestoreDoctorSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = serializer.validated_data['id']
+        instance.undelete()
+        return Response(status=status.HTTP_200_OK)

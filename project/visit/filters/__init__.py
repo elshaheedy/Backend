@@ -51,7 +51,7 @@ class VisitFilter(filters.FilterSet):
             'end_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             'doctors': ['exact'],
             'patient': ['exact'],
-            'is_deleted': ['exact'],
+            # 'is_deleted': ['exact'],
             'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             
         }

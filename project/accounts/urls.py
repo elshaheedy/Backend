@@ -29,12 +29,12 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
 
-    path('patients/restore/', PatientViewSet.as_view({'post': 'restore'}), name='patient-restore'),
     path('patients/deleted/', PatientViewSet.as_view({'get': 'get_deleted'}), name='patient-get-deleted'),
-
-    path('doctors/restore/', DoctorViewSet.as_view({'post': 'restore'}), name='doctor-restore'),
     path('doctors/deleted/', DoctorViewSet.as_view({'get': 'get_deleted'}), name='doctor-get-deleted'),
-
-    path('employees/restore/', EmployeeViewSet.as_view({'post': 'restore'}), name='employee-restore'),
     path('employees/deleted/', EmployeeViewSet.as_view({'get': 'get_deleted'}), name='employee-get-deleted'),
+
+    path('employees/restore/', RestoreEmployeeView.as_view(), name='employee-restore'),
+    path('patients/restore/', RestorePatientView.as_view(), name='patient-restore'),
+    path('doctors/restore/', RestoreDoctorView.as_view(), name='doctor-restore'),
+
 ]

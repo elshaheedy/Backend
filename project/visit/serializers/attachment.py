@@ -8,8 +8,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
     file_type=serializers.CharField(read_only=True)
     class Meta:
         model = Attachment
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        fields = '__all__'
 
 class RestoreAttachmentSerializer(serializers.Serializer):
     id = serializers.IntegerField()

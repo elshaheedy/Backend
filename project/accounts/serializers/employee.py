@@ -6,8 +6,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     address =AddressSerializer( required=False)
     class Meta:
         model = Employee
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        fields = '__all__'
 
 
 
