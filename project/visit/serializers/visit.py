@@ -28,8 +28,7 @@ class VisitSerializer(serializers.ModelSerializer):
     attachment = AttachmentSerializer( read_only=True, many=True,source='visit_attachments', required=False)
     class Meta:
         model = Visit
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        fields = '__all__'
 
 
 class RestoreVisitSerializer(serializers.Serializer):

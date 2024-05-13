@@ -6,8 +6,7 @@ from .user import *
 class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserImage
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        fields = '__all__'
 
 
 
@@ -19,8 +18,8 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
 
-    
-        exclude = ['is_deleted']
+        fields = '__all__'
+        # exclude = ['is_deleted']
     def validate_address(self, value):
         address_serializer = AddressSerializer(data=value)
         if not address_serializer.is_valid() or value!=address_serializer.data:

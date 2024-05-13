@@ -22,7 +22,6 @@ class Visit(SafeDeleteModel):
     patient = models.ForeignKey('accounts.Patient', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
     notes = models.TextField(blank=True)
     def save(self, *args, **kwargs):
         self.visit_number = Visit.objects.count()+1
@@ -43,7 +42,6 @@ class Attachment(SafeDeleteModel):
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         self.file_type = self.file.name.split('.')[-1]
         super(Attachment, self).save(*args, **kwargs)

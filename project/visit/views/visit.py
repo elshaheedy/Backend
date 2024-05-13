@@ -56,14 +56,7 @@ class VisitViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return super().destroy(request, *args, **kwargs)
-    def restore(self, request, *args, **kwargs):
-        serializer = RestoreVisitSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        instance = serializer.validated_data['id']
-        instance.undelete()
-        return Response(status=status.HTTP_200_OK)
+    
 
 
     def get_deleted(self, request, *args, **kwargs):
@@ -72,7 +65,18 @@ class VisitViewSet(viewsets.ModelViewSet):
         result_page = paginator.paginate_queryset(deleted_visits, request)
         serializer = self.get_serializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-
+from rest_framework.generics import GenericAPIView
+class RestoreVisitView(GenericAPIView):
+    serializer_class=RestoreVisitSerializer
+    pagination_class = CustomPagination
+    def post(self, request, *args, **kwargs):
+        serializer = RestoreVisitSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = serializer.validated_data['id']
+        instance.undelete()
+        return Response(status=status.HTTP_200_OK)
 
 
 

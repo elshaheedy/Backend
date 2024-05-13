@@ -34,7 +34,7 @@ class Profile(SafeDeleteModel):
     notes= models.TextField(blank=True,null=True)
     address = models.JSONField(null=True, blank=True)
     phone = models.JSONField(null=True, blank=True)
-    is_deleted = models.BooleanField(default=False)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:

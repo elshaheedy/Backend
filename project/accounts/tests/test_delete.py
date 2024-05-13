@@ -161,7 +161,7 @@ class DoctorDeleteTestCase(TestSetup):
         url=reverse('doctor-restore')
         response = self.client.post(
             url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token,data=data)
-      
+        # print(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Doctor.objects.count(), 1)
         self.assertEqual(len( Doctor.deleted_objects.all()), 0)
