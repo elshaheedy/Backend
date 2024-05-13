@@ -27,3 +27,18 @@ class PatientSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid address")
         # print(value,address_serializer.data)
         return value
+
+
+
+
+
+
+
+class RestorePatientSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    def validate_id(self, value):
+        try:
+            patient = Patient.deleted_objects.get(id=value)
+        except Patient.DoesNotExist:
+            raise serializers.ValidationError("Patient does not exist.")
+        return patient

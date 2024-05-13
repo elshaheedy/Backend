@@ -15,4 +15,17 @@ urlpatterns = [
     path('', include(router.urls)),
     path('statistics/', Statistics.as_view({'get': 'get'}), name='dashboard'),
     
+
+
+
+
+
+    # path('patients/restore/', PatientViewSet.as_view({'post': 'restore'}), name='patient-restore'),
+    # path('patients/deleted/', PatientViewSet.as_view({'get': 'get_deleted'}), name='patient-get-deleted'),
+
+    path('visits/restore/', VisitViewSet.as_view({'post': 'restore'}), name='visit-restore'),
+    path('visits/deleted/', VisitViewSet.as_view({'get': 'get_deleted'}), name='visit-get-deleted'),
+
+    path('attachments/restore/', AttachmentViewSet.as_view({'post': 'restore'}), name='attachment-restore'),
+    path('attachments/deleted/', AttachmentViewSet.as_view({'get': 'get_deleted'}), name='attachment-get-deleted'),
 ]

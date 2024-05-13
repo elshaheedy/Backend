@@ -45,18 +45,18 @@ class Command(BaseCommand):
             )
         )
 
-        images = UserImageFactory.create_batch(
-            users_count,
-            user=factory.Iterator(cycle(users)),
-        )
+        # images = UserImageFactory.create_batch(
+        #     users_count,
+        #     user=factory.Iterator(cycle(users)),
+        # )
 
-        for image in images:
-            image.save()
+        # for image in images:
+        #     image.save()
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"Successfully created and saved {len(images)} images")
-        )
+        # self.stdout.write(
+        #     self.style.SUCCESS(
+        #         f"Successfully created and saved {len(images)} images")
+        # )
 
         # addresses = AddressFactory.create_batch(
         #     users_count,

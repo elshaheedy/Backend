@@ -28,4 +28,13 @@ urlpatterns = [
     path('check-email/',CheckEmailView().as_view(), name='check_email'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
+
+    path('patients/restore/', PatientViewSet.as_view({'post': 'restore'}), name='patient-restore'),
+    path('patients/deleted/', PatientViewSet.as_view({'get': 'get_deleted'}), name='patient-get-deleted'),
+
+    path('doctors/restore/', DoctorViewSet.as_view({'post': 'restore'}), name='doctor-restore'),
+    path('doctors/deleted/', DoctorViewSet.as_view({'get': 'get_deleted'}), name='doctor-get-deleted'),
+
+    path('employees/restore/', EmployeeViewSet.as_view({'post': 'restore'}), name='employee-restore'),
+    path('employees/deleted/', EmployeeViewSet.as_view({'get': 'get_deleted'}), name='employee-get-deleted'),
 ]

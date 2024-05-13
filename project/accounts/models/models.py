@@ -3,14 +3,26 @@ Module for defining database models.
 
 This module contains the database models for the accounts app.
 """
-from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from shortuuidfield import ShortUUIDField
+from safedelete.models import SafeDeleteModel
+from safedelete.models import SOFT_DELETE_CASCADE
 
-User=get_user_model()
-class Profile(models.Model):
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+from django.contrib.auth.models import AbstractUser
+
+# class User(AbstractUser):
+#     pass
+
+    # _safedelete_policy =SOFT_DELETE_CASCADE
+# class Profile(SafeDeleteModel):
+    # _safedelete_policy =SOFT_DELETE_CASCADE
+class Profile(SafeDeleteModel):
+    _safedelete_policy =SOFT_DELETE_CASCADE
     user = models.OneToOneField(User, on_delete=models.CASCADE , null=True )
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True, null=True)
