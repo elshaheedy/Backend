@@ -5,12 +5,47 @@ from django.db.models import Sum
 
 from visit.models import *
 from accounts.models import *
+from django.db.models import Q
+
 
 class VisitFilter(filters.FilterSet):
+
+
+    MEASUREMENT_ATTRIBUTES=['weight','height','blood_pressure','temperature','pulse','oxygen_level']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.generate_address_filters()
+
+    def generate_address_filters(self):
+        for attribute in self.MEASUREMENT_ATTRIBUTES:
+            field_name = f'measurement__{attribute}'
+            lookup_fields = {
+                'icontains': 'CharFilter',
+                'contains': 'CharFilter',
+                'istartswith': 'CharFilter',
+                'iexact': 'CharFilter',
+                'exact': 'CharFilter',
+                'startswith': 'CharFilter',
+                # 'gt': 'NumberFilter',
+                # 'lt': 'NumberFilter',
+                # 'gte': 'NumberFilter',
+                # 'lte': 'NumberFilter',
+      
+            }
+               
+
+            for lookup_expr, filter_type in lookup_fields.items():
+                filter_name = f'{field_name}__{lookup_expr}'
+                filter_class = getattr(filters, filter_type)
+                filter_instance = filter_class(field_name=field_name, lookup_expr=lookup_expr)
+                self.filters[filter_name] = filter_instance
+
+
+
     class Meta:
         model = Visit
         fields = {
-            'ticket': ['exact'],
+            'ticket': ['exact', 'contains','startswith','iexact','icontains','istartswith'],
             'status': ['exact'],
             'start_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             'end_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
@@ -20,18 +55,7 @@ class VisitFilter(filters.FilterSet):
             'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
             
         }
-# class MeasurementFilter(filters.FilterSet):
-#     class Meta:
-#         model = Measurement
-#         fields = {
-#             'visit': ['exact'],
-#             'height': ['exact'],
-#             'weight': ['exact'],
-#             'blood_pressure': ['exact'],
-#             'temperature': ['exact'],
-#             'pulse': ['exact'],
-#             'oxygen_level': ['exact'],
-#             'created_at': ['year', 'month', 'day']
+
 #         }
 class AttachmentFilter(filters.FilterSet):
     class Meta:
@@ -40,7 +64,7 @@ class AttachmentFilter(filters.FilterSet):
             'user': ['exact'],
             'visit__patient': ['exact'],
             'visit': ['exact'],
-            'kind': ['exact', 'icontains', 'istartswith'],
+            'kind': ['exact', 'contains','startswith','iexact','icontains','istartswith'],
             'created_at': ['year', 'month', 'day', 'hour', 'minute', 'second', 'gt','lt','gte','lte'],
         }
 

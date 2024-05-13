@@ -83,12 +83,17 @@ class TestSetup(TestCase):
                      patient,
                      ticket='test',
                      start_at='2020-01-01',
-                     end_at='2020-01-01',):
+                     end_at='2020-01-01',
+                     measurement={
+                  
+                     }
+                     ):
         data = {
             'ticket': ticket,
             'patient': patient,
             'start_at': start_at,
-            'end_at': end_at
+            'end_at': end_at,
+           'measurement':measurement
         }
 
         response = self.client.post(

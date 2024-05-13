@@ -56,4 +56,4 @@ class PatientViewSet(viewsets.ModelViewSet):
         
         
         return Response(PatientSerializer(patient).data, status=status.HTTP_201_CREATED)
- 
+    
