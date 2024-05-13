@@ -49,3 +49,19 @@ class VisitTestCase(TestSetup):
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 1)
+    def test_get_visit_measurement(self):
+        measurement={
+            'height': "1cm",
+            'weight': "1kg",
+            "blood_pressure": "1/1",
+            "temperature": "1C",
+            "pulse": "1",
+            "oxygen_level": "1"
+        }
+        visit9=self.create_visit(self.staff_token,patient=self.patient1['id'],start_at='2020-01-09',measurement=measurement)
+        
+        url='/visit/visit/?measurement__height__icontains=1'
+        response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['results']), 1)
+    
