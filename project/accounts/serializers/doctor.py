@@ -8,3 +8,17 @@ class DoctorSerializer(serializers.ModelSerializer):
         model = Doctor
         # fields = '__all__'
         exclude = ['is_deleted']
+
+
+
+
+
+
+class RestoreDoctorSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    def validate_id(self, value):
+        try:
+            doctor=Doctor.deleted_objects.get(id=value)
+        except Doctor.DoesNotExist:
+            raise serializers.ValidationError("Doctor does not exist.")
+        return doctor

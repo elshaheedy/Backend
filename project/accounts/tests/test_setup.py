@@ -151,3 +151,38 @@ class TestSetup(TestCase):
                 '/visit/visit/', data, format='json', HTTP_AUTHORIZATION='Bearer ' + staff_token)
             self.assertEqual(response.status_code, 201)
             return response.data
+    def create_employee(self, staff_token, national_id='01234567890123',
+                       email='test1@test.com',
+                       full_name='test',
+                       date_of_birth='2000-01-01',
+                       gender='M',
+                       address={
+                           'street': 'test',
+                           'city': 'test',
+                           'governorate': 'test'
+                       },
+                       phone={
+                           'mobile': 'test'
+                       }
+
+                       ):
+
+        data = {
+
+            'national_id': national_id,
+          
+            'full_name': full_name,
+            'date_of_birth': date_of_birth,
+            'gender': gender,
+            'address': address,
+            'phone': phone
+
+
+
+
+        }
+
+        response = self.client.post(
+            '/accounts/employee/', data, format='json', HTTP_AUTHORIZATION='Bearer ' + staff_token)
+        token = self.get_token(data['national_id'], data['national_id'])
+        return response.data, token

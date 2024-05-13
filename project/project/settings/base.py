@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'debug_toolbar',
+    'safedelete',
+
 ]
 
 MIDDLEWARE = [
@@ -186,3 +188,5 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+# AUTH_USER_MODEL = 'accounts.User'

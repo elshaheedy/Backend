@@ -9,3 +9,14 @@ class EmployeeSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         exclude = ['is_deleted']
 
+
+
+
+class RestoreEmployeeSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    def validate_id(self, value):
+        try:
+            employee=Employee.deleted_objects.get(id=value)
+        except Employee.DoesNotExist:
+            raise serializers.ValidationError("Employee does not exist.")
+        return employee

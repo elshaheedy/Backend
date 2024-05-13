@@ -1,10 +1,14 @@
+from re import S
 from django.db import models
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your models here.
-class Visit(models.Model):
 
+from safedelete.models import SafeDeleteModel
+from safedelete.models import SOFT_DELETE_CASCADE
+class Visit(SafeDeleteModel):
 
+    _safedelete_policy =SOFT_DELETE_CASCADE
 
     status = models.CharField(max_length=255, null=True, blank=True,
                                choices=[('pending', 'Pending'),('done', 'Done'),('canceled', 'Canceled')])
@@ -25,7 +29,9 @@ class Visit(models.Model):
         super(Visit, self).save(*args, **kwargs)
 
 
-class Attachment(models.Model):
+class Attachment(SafeDeleteModel):
+
+    _safedelete_policy =SOFT_DELETE_CASCADE
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_attachments', null=True, blank=True)
     visit = models.ForeignKey('visit.Visit', on_delete=models.CASCADE, related_name='visit_attachments', null=True, blank=True)
     kind = models.CharField(max_length=255)

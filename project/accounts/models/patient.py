@@ -1,5 +1,8 @@
 from .models      import *
-class UserImage(models.Model):
+from safedelete.models import SafeDeleteModel
+from safedelete.models import SOFT_DELETE_CASCADE
+class UserImage(SafeDeleteModel):
+    _safedelete_policy =SOFT_DELETE_CASCADE
     image = models.ImageField(upload_to='user_images' )
     # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_images' )
     user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='image' )
