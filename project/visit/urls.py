@@ -12,7 +12,20 @@ router.register('attachment', AttachmentViewSet)
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
-    path('', include(router.urls)),
     path('statistics/', Statistics.as_view({'get': 'get'}), name='dashboard'),
     
+
+
+
+
+
+    path('deleted-visit/restore/<str:pk>/', DeletedVisitView.as_view({'post':'restore'}), name='visit-restore'),
+    path('visit/deleted/', VisitViewSet.as_view({'get': 'get_deleted'}), name='visit-get-deleted'),
+    path('deleted-visit/delete/<str:pk>/', DeletedVisitView.as_view({'delete':'destroy'}), name='visit-restore'),
+
+    path('attachment/deleted/', AttachmentViewSet.as_view({'get': 'get_deleted'}), name='attachment-get-deleted'),
+    path('deleted-attachment/delete/<str:pk>/', DeletedAttachmentView.as_view({'delete':'destroy'}), name='attachment-restore'),
+
+    path('deleted-attachment/restore/<str:pk>/', DeletedAttachmentView.as_view({'post':'restore'}), name='attachment-restore'),
+    path('', include(router.urls)),
 ]

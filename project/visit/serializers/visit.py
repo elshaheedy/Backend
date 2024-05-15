@@ -11,8 +11,8 @@ class Attachment(models.Model):
 '''
 
 from rest_framework import serializers
-from .models import *
-
+from visit.models import *
+from .attachment import *
 class MeasurementSerializer(serializers.Serializer):
     height = serializers.CharField(max_length=255 ,required=False)
     weight = serializers.CharField(max_length=255 ,required=False)
@@ -21,20 +21,26 @@ class MeasurementSerializer(serializers.Serializer):
     pulse = serializers.CharField(max_length=255 ,required=False)
     oxygen_level = serializers.CharField(max_length=255 ,required=False)
     
-class AttachmentSerializer(serializers.ModelSerializer):
-    file_type=serializers.CharField(read_only=True)
-    class Meta:
-        model = Attachment
-        # fields = '__all__'
-        exclude = ['is_deleted']
+
 
 class VisitSerializer(serializers.ModelSerializer):
     measurement = MeasurementSerializer( required=False)
     attachment = AttachmentSerializer( read_only=True, many=True,source='visit_attachments', required=False)
     class Meta:
         model = Visit
-        # fields = '__all__'
-        exclude = ['is_deleted']
+        fields = '__all__'
+
+
+class RestoreVisitSerializer(serializers.Serializer):
+    id = serializers.CharField()
+    def validate_id(self, value):
+        try:
+            visit = Visit.deleted_objects.get(id=value)
+        except Visit.DoesNotExist:
+            raise serializers.ValidationError("Visit does not exist.")
+        return visit
+
+
 
 
 class StatisticsSerializer(serializers.Serializer):

@@ -5,5 +5,5 @@ class Doctor(Profile):
     experience_years = models.PositiveIntegerField( blank=True, null=True)
     work_days= models.CharField(max_length=255,blank=True,null=True)
     
-    def __str__(self):
-        return self.first_name
+    # def __str__(self):
+    #     return self.first_name
