@@ -37,12 +37,11 @@ class VisitTestCase(TestSetup):
         url=f'/visit/visit/{self.visit1["id"]}/?method=soft'
         response = self.client.delete(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 204)
-        url=reverse('visit-restore')
-        data={
-            'id':self.visit1['id']
-        }
-        response = self.client.post(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token,data=data)
+        # url=reverse('visit-restore',)
+        url=f"/visit/deleted-visit/restore/{self.visit1['id']}/"
 
+        response = self.client.post(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
+        print(response)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Visit.objects.count(), 2)
         self.assertEqual(Visit.deleted_objects.count(), 0)
@@ -50,10 +49,12 @@ class VisitTestCase(TestSetup):
         url=f'/visit/visit/{self.visit1["id"]}/?method=soft'
         response = self.client.delete(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 204)
-        url=f'/visit/visits/deleted/'
+        url=f'/visit/visit/deleted/'
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 1)
+
+
 
 # class AttachmentTestCase(TestSetup):
 #     def setUp(self) -> None:

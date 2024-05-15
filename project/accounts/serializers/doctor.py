@@ -9,7 +9,11 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
+    def validate_national_id(self,value):
+        user=User.objects.filter(username=value)
+        if user:
+            raise serializers.ValidationError("national id exits")
+        return value
 
 
 

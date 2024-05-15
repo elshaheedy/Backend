@@ -64,41 +64,31 @@ class AttachmentViewSet(viewsets.ModelViewSet):
         result_page = paginator.paginate_queryset( deleted_attachments, request)
         serializer = self.get_serializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-from rest_framework.generics import GenericAPIView
-class RestoreAttachmentView(GenericAPIView):
-    serializer_class=RestoreAttachmentSerializer
-    pagination_class = CustomPagination
-    def post(self, request, *args, **kwargs):
-        serializer = RestoreAttachmentSerializer(data=request.data)
+
+
+
+
+
+
+
+from rest_framework import viewsets
+class DeletedAttachmentView(viewsets.ViewSet):
+    serializer_class = RestoreAttachmentSerializer
+    queryset = Attachment.deleted_objects.all()
+    permission_classes = [IsAuthenticated,CustomPermission]
+    def restore(self, request, *args, **kwargs):
+        serializer = RestoreAttachmentSerializer(data={'id':kwargs['pk']})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         instance = serializer.validated_data['id']
         instance.undelete()
         return Response(status=status.HTTP_200_OK)
-
-
-
-
-
-
-
-class Statistics(GenericViewSet):
-    serializer_class=StatisticsSerializer
-    filter_backends = [
-        DjangoFilterBackend,
-
-    ]
-    filterset_class =  StatisticsFilter
-
-    def get(self, request, *args, **kwargs):
-     
-
-        data = {
-            'total_visits': Visit.objects.count(),
-            'total_patients': Patient.objects.count(),
-            'total_doctors': Doctor.objects.count(),
-            'total_employees': Employee.objects.count(),
-        }
-
-        return Response(data)
+    def destroy(self, request, *args, **kwargs):
+        serializer = RestoreAttachmentSerializer(data={'id':kwargs['pk']})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = serializer.validated_data['id']
+        instance.delete(force_policy=HARD_DELETE)
+        return Response(status=status.HTTP_204_NO_CONTENT)
