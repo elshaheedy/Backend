@@ -14,20 +14,20 @@ class VisitTestCase(TestSetup):
         self.visit2 = self.create_visit(self.staff_token,patient=self.patient2['id'],start_at='2020-01-02')
     
     def test_get_visit(self):
-        url='/visit/visit/?order_by=-id'
+        url='/visit/visit/?order_by=created_at'
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 2)
         visit1=response.data['results'][0]
         visit2=response.data['results'][1]
-        self.assertEqual(visit1['id'] < visit2['id'], True)
+        self.assertEqual(visit1['created_at'] < visit2['created_at'], True)
         url='/visit/visit/?order_by=id'
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 2)
         visit1=response.data['results'][0]
         visit2=response.data['results'][1]
-        self.assertEqual(visit1['id'] > visit2['id'], False)
+        self.assertEqual(visit1['created_at'] > visit2['created_at'], False)
     def test_get_visit_order_by_start_at(self):
         url='/visit/visit/?order_by=start_at'
         response = self.client.get(url, format='json', HTTP_AUTHORIZATION='Bearer ' + self.staff_token)
