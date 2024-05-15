@@ -3,11 +3,6 @@ from rest_framework import serializers
 from accounts.models import *
 from .user import *
 
-class UserImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserImage
-        fields = '__all__'
-
 
 
 class PatientSerializer(serializers.ModelSerializer):
@@ -27,14 +22,18 @@ class PatientSerializer(serializers.ModelSerializer):
         # print(value,address_serializer.data)
         return value
 
-
+    def validate_national_id(self,value):
+        user=User.objects.filter(username=value)
+        if user:
+            raise serializers.ValidationError("national id exits")
+        return value
 
 
 
 
 
 class RestorePatientSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id =  serializers.CharField()
     def validate_id(self, value):
         try:
             patient = Patient.deleted_objects.get(id=value)

@@ -32,7 +32,7 @@ class VisitSerializer(serializers.ModelSerializer):
 
 
 class RestoreVisitSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.CharField()
     def validate_id(self, value):
         try:
             visit = Visit.deleted_objects.get(id=value)

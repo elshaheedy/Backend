@@ -77,16 +77,25 @@ class DoctorViewSet(viewsets.ModelViewSet):
         return paginator.get_paginated_response(serializer.data)
 
 
-from rest_framework.generics import GenericAPIView
-class RestoreDoctorView(GenericAPIView):
-    serializer_class = RestoreDoctorSerializer
-    permission_classes = [IsAuthenticated,CustomPermission]
 
-    def post(self, request, *args, **kwargs):
-        serializer = RestoreDoctorSerializer(data=request.data)
+from rest_framework import viewsets
+class DeletedDoctorView(viewsets.ViewSet):
+    serializer_class = RestoreDoctorSerializer
+    queryset = Doctor.deleted_objects.all()
+    permission_classes = [IsAuthenticated,CustomPermission]
+    def restore(self, request, *args, **kwargs):
+        serializer = RestoreDoctorSerializer(data={'id':kwargs['pk']})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         instance = serializer.validated_data['id']
         instance.undelete()
         return Response(status=status.HTTP_200_OK)
+    def destroy(self, request, *args, **kwargs):
+        serializer = RestoreDoctorSerializer(data={'id':kwargs['pk']})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = serializer.validated_data['id']
+        instance.delete(force_policy=HARD_DELETE)
+        return Response(status=status.HTTP_204_NO_CONTENT)

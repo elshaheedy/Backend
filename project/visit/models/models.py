@@ -6,7 +6,9 @@ User = get_user_model()
 
 from safedelete.models import SafeDeleteModel
 from safedelete.models import SOFT_DELETE_CASCADE
+import uuid
 class Visit(SafeDeleteModel):
+    id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True ,primary_key=True)
 
     _safedelete_policy =SOFT_DELETE_CASCADE
 
@@ -29,6 +31,7 @@ class Visit(SafeDeleteModel):
 
 
 class Attachment(SafeDeleteModel):
+    id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True ,primary_key=True)
 
     _safedelete_policy =SOFT_DELETE_CASCADE
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_attachments', null=True, blank=True)

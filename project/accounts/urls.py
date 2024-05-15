@@ -20,7 +20,6 @@ router.register('user-details', UserDetails, basename='user-details')
 
 # from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
-    path('', include(router.urls)),
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
@@ -29,12 +28,18 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
 
-    path('patients/deleted/', PatientViewSet.as_view({'get': 'get_deleted'}), name='patient-get-deleted'),
-    path('doctors/deleted/', DoctorViewSet.as_view({'get': 'get_deleted'}), name='doctor-get-deleted'),
-    path('employees/deleted/', EmployeeViewSet.as_view({'get': 'get_deleted'}), name='employee-get-deleted'),
+    path('patient/deleted/', PatientViewSet.as_view({'get': 'get_deleted'}), name='patient-get-deleted'),
+    path('doctor/deleted/', DoctorViewSet.as_view({'get': 'get_deleted'}), name='doctor-get-deleted'),
+    path('employee/deleted/', EmployeeViewSet.as_view({'get': 'get_deleted'}), name='employee-get-deleted'),
 
-    path('employees/restore/', RestoreEmployeeView.as_view(), name='employee-restore'),
-    path('patients/restore/', RestorePatientView.as_view(), name='patient-restore'),
-    path('doctors/restore/', RestoreDoctorView.as_view(), name='doctor-restore'),
+    path('deleted-patient/restore/<str:pk>/', DeletedPatientView.as_view({'post': 'restore'}), name='patient-restore'),
+    path('deleted-patient/delete/<str:pk>/', DeletedPatientView.as_view({'delete': 'destroy'}), name='deleted-patient-delete'),
 
+    path('deleted-doctor/restore/<str:pk>/', DeletedDoctorView.as_view({'post': 'restore'}), name='doctor-restore'),    
+    path('deleted-doctor/delete/<str:pk>/', DeletedDoctorView.as_view({'delete': 'destroy'}), name='deleted-doctor-delete'),
+
+    path('deleted-employee/restore/<str:pk>/', DeletedEmployeeView.as_view({'post': 'restore'}), name='employee-restore'),
+    path('deleted-employee/delete/<str:pk>/', DeletedEmployeeView.as_view({'delete': 'destroy'}), name='deleted-employee-delete'),
+
+    path('', include(router.urls)),
 ]
