@@ -32,14 +32,14 @@ urlpatterns = [
     path('doctor/deleted/', DoctorViewSet.as_view({'get': 'get_deleted'}), name='doctor-get-deleted'),
     path('employee/deleted/', EmployeeViewSet.as_view({'get': 'get_deleted'}), name='employee-get-deleted'),
 
-    path('deleted-patient/restore/<int:pk>/', DeletedPatientView.as_view({'post': 'restore'}), name='patient-restore'),
-    path('deleted-patient/delete/<int:pk>/', DeletedPatientView.as_view({'delete': 'destroy'}), name='deleted-patient-delete'),
+    path('deleted-patient/restore/<str:pk>/', DeletedPatientView.as_view({'post': 'restore'}), name='patient-restore'),
+    path('deleted-patient/delete/<str:pk>/', DeletedPatientView.as_view({'delete': 'destroy'}), name='deleted-patient-delete'),
 
-    path('deleted-doctor/restore/<int:pk>/', DeletedDoctorView.as_view({'post': 'restore'}), name='doctor-restore'),    
-    path('deleted-doctor/delete/<int:pk>/', DeletedDoctorView.as_view({'delete': 'destroy'}), name='deleted-doctor-delete'),
+    path('deleted-doctor/restore/<str:pk>/', DeletedDoctorView.as_view({'post': 'restore'}), name='doctor-restore'),    
+    path('deleted-doctor/delete/<str:pk>/', DeletedDoctorView.as_view({'delete': 'destroy'}), name='deleted-doctor-delete'),
 
-    path('deleted-employee/restore/<int:pk>/', DeletedEmployeeView.as_view({'post': 'restore'}), name='employee-restore'),
-    path('deleted-employee/delete/<int:pk>/', DeletedEmployeeView.as_view({'delete': 'destroy'}), name='deleted-employee-delete'),
+    path('deleted-employee/restore/<str:pk>/', DeletedEmployeeView.as_view({'post': 'restore'}), name='employee-restore'),
+    path('deleted-employee/delete/<str:pk>/', DeletedEmployeeView.as_view({'delete': 'destroy'}), name='deleted-employee-delete'),
 
     path('', include(router.urls)),
 ]

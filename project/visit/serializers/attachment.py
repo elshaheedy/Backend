@@ -11,7 +11,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RestoreAttachmentSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.CharField()
     def validate_id(self, value):
         try:
             attachment = Attachment.deleted_objects.get(id=value)

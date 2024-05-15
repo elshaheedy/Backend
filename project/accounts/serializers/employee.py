@@ -2,6 +2,8 @@ from rest_framework import serializers
 from accounts.models import Employee
 from .user import *
 class EmployeeSerializer(serializers.ModelSerializer):
+    image = UserImageSerializer( read_only=True, source='user.image')
+
     phone=PhoneSerializer(required=False)
     address =AddressSerializer( required=False)
     class Meta:
@@ -16,7 +18,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class RestoreEmployeeSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id =  serializers.CharField()
     def validate_id(self, value):
         try:
             employee=Employee.deleted_objects.get(id=value)

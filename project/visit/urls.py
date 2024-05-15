@@ -19,13 +19,13 @@ urlpatterns = [
 
 
 
-    path('deleted-visit/restore/<int:pk>/', DeletedVisitView.as_view({'post':'restore'}), name='visit-restore'),
+    path('deleted-visit/restore/<str:pk>/', DeletedVisitView.as_view({'post':'restore'}), name='visit-restore'),
     path('visit/deleted/', VisitViewSet.as_view({'get': 'get_deleted'}), name='visit-get-deleted'),
-    path('deleted-visit/delete/<int:pk>/', DeletedVisitView.as_view({'delete':'destroy'}), name='visit-restore'),
+    path('deleted-visit/delete/<str:pk>/', DeletedVisitView.as_view({'delete':'destroy'}), name='visit-restore'),
 
     path('attachment/deleted/', AttachmentViewSet.as_view({'get': 'get_deleted'}), name='attachment-get-deleted'),
-    path('deleted-attachment/delete/<int:pk>/', DeletedAttachmentView.as_view({'delete':'destroy'}), name='attachment-restore'),
+    path('deleted-attachment/delete/<str:pk>/', DeletedAttachmentView.as_view({'delete':'destroy'}), name='attachment-restore'),
 
-    path('deleted-attachment/restore/<int:pk>/', DeletedAttachmentView.as_view({'post':'restore'}), name='attachment-restore'),
+    path('deleted-attachment/restore/<str:pk>/', DeletedAttachmentView.as_view({'post':'restore'}), name='attachment-restore'),
     path('', include(router.urls)),
 ]

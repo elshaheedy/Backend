@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from django.contrib.auth.models import AbstractUser
-
+import uuid
 # class User(AbstractUser):
 #     pass
 
@@ -22,6 +22,8 @@ from django.contrib.auth.models import AbstractUser
 # class Profile(SafeDeleteModel):
     # _safedelete_policy =SOFT_DELETE_CASCADE
 class Profile(SafeDeleteModel):
+    id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True ,primary_key=True)
+
     _safedelete_policy =SOFT_DELETE_CASCADE
     user = models.OneToOneField(User, on_delete=models.CASCADE , null=True )
     full_name = models.CharField(max_length=255)
@@ -42,3 +44,13 @@ class Profile(SafeDeleteModel):
 
 
     
+class UserImage(SafeDeleteModel):
+    _safedelete_policy =SOFT_DELETE_CASCADE
+    id=models.UUIDField(default=uuid.uuid4, editable=False, unique=True ,primary_key=True)
+
+    image = models.ImageField(upload_to='user_images' )
+    # user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='user_images' )
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,related_name='image' )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)

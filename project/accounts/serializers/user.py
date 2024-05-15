@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
-
+from accounts.models import *
 
 class PhoneSerializer(serializers.Serializer):
     mobile=serializers.CharField(required=False)
@@ -60,3 +60,10 @@ class ChangePasswordSerializer(serializers.Serializer):
         user = self.validated_data['user_id']
         user.set_password(self.validated_data['new_password'])
         user.save()
+
+
+class UserImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserImage
+        fields = '__all__'
+

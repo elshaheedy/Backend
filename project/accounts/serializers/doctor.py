@@ -2,6 +2,7 @@ from rest_framework import serializers
 from accounts.models import Doctor
 from .user import *
 class DoctorSerializer(serializers.ModelSerializer):
+    image = UserImageSerializer( read_only=True, source='user.image')
     phone=PhoneSerializer(required=False)
     address =AddressSerializer( required=False)
     class Meta:
@@ -18,7 +19,7 @@ class DoctorSerializer(serializers.ModelSerializer):
 
 
 class RestoreDoctorSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.CharField()
     def validate_id(self, value):
         try:
             doctor=Doctor.deleted_objects.get(id=value)
